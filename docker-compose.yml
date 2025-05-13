@@ -1,27 +1,11 @@
 services:
 
-  postgres:
-    image: bitnami/postgresql:latest
-    container_name: postgres_db
-    ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=4l9u2i7s
-      - POSTGRES_DB=barbershop
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-    networks:
-      - app-network
   app:
     build: .
     container_name: nest-app
     restart: always
     env_file:
       - .env
-    depends_on:
-      - postgres
     ports:
       - '3333:3333'
     command: yarn start:dev
@@ -32,6 +16,3 @@ networks:
   app-network:
     driver: bridge
 
-
-volumes:
-  pgdata:
