@@ -1,11 +1,12 @@
 # Etapa de build
 FROM node:20-alpine AS builder
-WORKDIR /Documentos/projetos/docker_test
+#WORKDIR /Documentos/projetos/docker_test
+WORKDIR /var/www/barbershop
 RUN apk add --no-cache openssl
 COPY prisma ./prisma
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+RUN npm install 
 RUN npx prisma generate
 COPY . .
 
