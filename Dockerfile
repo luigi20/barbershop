@@ -5,8 +5,8 @@ WORKDIR /var/www/barbershop
 RUN apk add --no-cache openssl
 COPY prisma ./prisma
 COPY package*.json ./
-
-RUN npm install 
+RUN npm ci --omit=dev
+#RUN npm install 
 RUN npx prisma generate
 COPY . .
 
