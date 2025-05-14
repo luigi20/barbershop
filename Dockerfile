@@ -1,14 +1,32 @@
-# Etapa de build
 FROM node:20-alpine AS builder
-#WORKDIR /Documentos/projetos/docker_test
+
 WORKDIR /var/www/barbershop
+
 RUN apk add --no-cache openssl
-COPY prisma ./prisma
+
 COPY package*.json ./
-RUN npm install
-#RUN npm install 
+COPY yarn.lock ./
+RUN yarn install
+
+COPY prisma ./prisma
 RUN npx prisma generate
 
 COPY . .
-RUN yarn build  
-EXPOSE 3333
+
+# Adiciona o tsconfig (necessário para o build funcionar)
+COPY tsconfig*.json ./
+
+# Compila o projeto NestJS
+RUN yarn build
+
+# Fase final
+FROM node:20-alpine
+
+WORKDIR /var/www/barbershop
+
+COPY --from=builder /var/www/barbershop/dist ./dist
+COPY --from=builder /var/www/barbershop/node_modules ./node_modules
+COPY --from=builder /var/www/barbershop/package.json ./
+COPY .env .env
+
+CMD ["node", "dist/main"]
