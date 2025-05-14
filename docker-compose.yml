@@ -8,7 +8,10 @@ services:
       - .env
     ports:
       - '3333:3333'
-    command: npx prisma migrate deploy && yarn start:prod
+    command:  yarn start:prod
+    volumes:
+      - .:/app
+      - /app/node_modules # evita sobrescrever node_modules do container com do host
     networks:
       - app-network
 
