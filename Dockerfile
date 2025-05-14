@@ -8,6 +8,7 @@ COPY package*.json ./
 RUN npm install
 #RUN npm install 
 RUN npx prisma generate
+COPY tsconfig.json ./
 RUN yarn build  
 COPY . .
 
