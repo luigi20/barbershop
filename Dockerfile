@@ -8,6 +8,7 @@ COPY package*.json ./
 RUN npm install
 #RUN npm install 
 RUN npx prisma generate
+RUN yarn build  
 COPY . .
 
 EXPOSE 3333
