@@ -11,5 +11,3 @@ RUN npx prisma generate
 COPY . .
 
 EXPOSE 3333
-
-CMD npx prisma migrate dev
