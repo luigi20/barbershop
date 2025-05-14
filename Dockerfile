@@ -6,7 +6,7 @@ RUN apk add --no-cache openssl
 
 COPY package*.json ./
 COPY yarn.lock ./
-RUN yarn install
+RUN yarn
 
 COPY prisma ./prisma
 RUN npx prisma generate
