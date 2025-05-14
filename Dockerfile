@@ -27,6 +27,5 @@ WORKDIR /var/www/barbershop
 COPY --from=builder /var/www/barbershop/dist ./dist
 COPY --from=builder /var/www/barbershop/node_modules ./node_modules
 COPY --from=builder /var/www/barbershop/package.json ./
-COPY .env ./
 
 CMD ["node", "dist/main"]
