@@ -10,5 +10,4 @@ RUN npm install
 RUN npx prisma generate
 
 COPY . .
-RUN yarn build  
 EXPOSE 3333
