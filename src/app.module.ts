@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { BarberModule } from './modules/barber/barber.module';
 import { RedisModule } from './infra/redis/redis.module';
+import { UserModule } from '@modules/user/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
-    BarberModule,
+    UserModule,
     RedisModule,
   ],
   controllers: [],

@@ -1,20 +1,21 @@
 import { randomUUID } from 'crypto';
 import { Replace } from 'src/utils/replace';
 
-export interface Barber_Props {
-  user_id: string;
+export interface User_Props {
+  password: string;
+  email: string;
   name: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export class Barber {
+export class User {
   private _id: string;
-  private props: Barber_Props;
+  private props: User_Props;
 
   constructor(
     props: Replace<
-      Barber_Props,
+      User_Props,
       {
         created_at?: Date;
         updated_at?: Date;
@@ -34,19 +35,28 @@ export class Barber {
     return this._id;
   }
 
-  public get user_id(): string {
-    return this.props.user_id;
+  public get password(): string {
+    return this.props.password;
   }
 
-  public set user_id(user_id: string) {
-    this.props.user_id = user_id;
+  public set password(password: string) {
+    this.props.password = password;
   }
+
   public get name(): string {
     return this.props.name;
   }
 
   public set name(name: string) {
     this.props.name = name;
+  }
+
+  public get email(): string {
+    return this.props.email;
+  }
+
+  public set email(email: string) {
+    this.props.email = email;
   }
 
   public get created_at(): Date {

@@ -1,0 +1,28 @@
+import { User } from '@modules/user/shared/entities/user.entity';
+import { UserRelations as RawUser } from '@prisma/client';
+export class PrismaUserMapper {
+  static toPrisma(user: User) {
+    return {
+      id: user.id,
+      name: user.name,
+      user_id: user.name,
+      email: user.email,
+      password: user.password,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+    };
+  }
+
+  static toDomain(raw: RawUser): User {
+    return new User(
+      {
+        name: raw.name,
+        email: raw.email,
+        password: raw.password,
+        created_at: raw.created_at,
+        updated_at: raw.updated_at,
+      },
+      raw.id,
+    );
+  }
+}

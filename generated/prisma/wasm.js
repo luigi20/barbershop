@@ -120,20 +120,28 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.BarberScalarFieldEnum = {
+exports.Prisma.OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  user_id: 'user_id',
+  owner_id: 'owner_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   email: 'email',
   password: 'password',
   created_at: 'created_at',
   updated_at: 'updated_at'
+};
+
+exports.Prisma.MemberScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  organization_id: 'organization_id',
+  user_id: 'user_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -145,11 +153,15 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.Role = exports.$Enums.Role = {
+  ADMIN: 'ADMIN',
+  BARBER: 'BARBER'
+};
 
 exports.Prisma.ModelName = {
-  Barber: 'Barber',
-  User: 'User'
+  Organization: 'Organization',
+  User: 'User',
+  Member: 'Member'
 };
 
 /**

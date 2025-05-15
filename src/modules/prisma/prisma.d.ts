@@ -1,19 +1,31 @@
 declare module '@prisma/client' {
-  interface BarberRelations {
-    id: string;
-    user_id: string;
-    name: string;
-    created_at: Date;
-    updated_at: Date;
-    user?: UserRelations;
-  }
-
   interface UserRelations {
     id: string;
+    name: string;
     email: string;
     password: string;
     created_at: Date;
     updated_at: Date;
-    Barber?: UserRelations;
+    member_on?: MemberRelations[];
+    organizations?: OrganizationRelations[];
+  }
+
+  interface OrganizationRelations {
+    id: string;
+    name: string;
+    onwer: UserRelations;
+    owner_id: string;
+    created_at: Date;
+    updated_at: Date;
+    members?: MemberRelations[];
+  }
+
+  interface MemberRelations {
+    id: string;
+    role: string;
+    organization_id: string;
+    user_id: string;
+    user: UserRelations;
+    organization: OrganizationRelations;
   }
 }
