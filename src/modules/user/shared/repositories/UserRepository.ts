@@ -31,6 +31,12 @@ class UserRepository implements IUserRepository {
     if (!result) return null;
     return PrismaUserMapper.toDomain(result);
   }
+
+  async findByAll(): Promise<User[]> {
+    const result = await this.prisma.user.findMany();
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    return result.map(PrismaUserMapper.toDomain);
+  }
   async update(data: User): Promise<void> {
     const raw = PrismaUserMapper.toPrisma(data);
     await this.prisma.user.update({

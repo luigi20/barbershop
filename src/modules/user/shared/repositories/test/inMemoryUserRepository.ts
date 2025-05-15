@@ -6,6 +6,10 @@ import { User } from '../../entities/user.entity';
 export class inMemoryUserRepository implements IUserRepository {
   public list_user: User[] = [];
   // eslint-disable-next-line @typescript-eslint/require-await
+  async findByAll(): Promise<User[]> {
+    return this.list_user;
+  }
+  // eslint-disable-next-line @typescript-eslint/require-await
   async create(data: User): Promise<void> {
     this.list_user.push(data);
   }
