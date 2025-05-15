@@ -4,7 +4,7 @@ import { IUserRepository } from '@modules/user/shared/repositories/abstract_clas
 import bcrypt from 'bcrypt';
 import { UpdateUserDto } from '../dto/update_user.dto';
 @Injectable()
-export class UserUpdateServiceService {
+export class UserUpdateService {
   constructor(private readonly userRepository: IUserRepository) {}
   public async execute({
     email,

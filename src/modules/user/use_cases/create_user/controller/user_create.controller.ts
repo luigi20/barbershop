@@ -1,11 +1,11 @@
 import { UserViewModel } from '@modules/user/shared/view-models/user-view-model';
 import { Controller, Post, Body } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { UserCreateServiceService } from '../service/user_create.service';
+import { UserCreateService } from '../service/user_create.service';
 
 @Controller('user')
-export class UserController {
-  constructor(private readonly userCreateService: UserCreateServiceService) {}
+export class UserCreateController {
+  constructor(private readonly userCreateService: UserCreateService) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
