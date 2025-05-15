@@ -4,7 +4,7 @@ import { User } from '@modules/user/shared/entities/user.entity';
 import { IUserRepository } from '@modules/user/shared/repositories/abstract_class/IUserRepository';
 import bcrypt from 'bcrypt';
 @Injectable()
-export class UserService {
+export class UserCreateServiceService {
   constructor(private readonly userRepository: IUserRepository) {}
   public async execute({
     email,
