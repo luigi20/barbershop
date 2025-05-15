@@ -1,5 +1,7 @@
+import type { PrismaClient as OriginalPrismaClient } from '@prisma/client';
 declare module '@prisma/client' {
-  interface UserRelations {
+  export { OriginalPrismaClient as PrismaClient };
+  export interface UserRelations {
     id: string;
     name: string;
     email: string;
@@ -10,7 +12,7 @@ declare module '@prisma/client' {
     organizations?: OrganizationRelations[];
   }
 
-  interface OrganizationRelations {
+  export interface OrganizationRelations {
     id: string;
     name: string;
     onwer: UserRelations;
@@ -20,7 +22,7 @@ declare module '@prisma/client' {
     members?: MemberRelations[];
   }
 
-  interface MemberRelations {
+  export interface MemberRelations {
     id: string;
     role: string;
     organization_id: string;

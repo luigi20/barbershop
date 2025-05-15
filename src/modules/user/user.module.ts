@@ -9,6 +9,8 @@ import { UserDeleteController } from './use_cases/delete_user/controller/user_de
 import { UserDeleteService } from './use_cases/delete_user/service/user_delete.service';
 import { UserGetAllController } from './use_cases/getall_user/controller/user_getall.controller';
 import { UserGetAllService } from './use_cases/getall_user/service/user_getall.service';
+import { UserGetController } from './use_cases/get_user/controller/user_get.controller';
+import { UserGetService } from './use_cases/get_user/service/user_get.service';
 
 @Module({
   controllers: [
@@ -16,12 +18,14 @@ import { UserGetAllService } from './use_cases/getall_user/service/user_getall.s
     UserUpdateController,
     UserDeleteController,
     UserGetAllController,
+    UserGetController,
   ],
   providers: [
     UserCreateService,
     UserUpdateService,
     UserDeleteService,
     UserGetAllService,
+    UserGetService,
     {
       provide: IUserRepository,
       useClass: UserRepository,
