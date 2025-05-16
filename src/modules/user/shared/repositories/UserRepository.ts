@@ -14,6 +14,7 @@ class UserRepository implements IUserRepository {
       },
     });
     if (!result) return null;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return PrismaUserMapper.toDomain(result);
   }
   async create(data: User): Promise<void> {
@@ -29,6 +30,7 @@ class UserRepository implements IUserRepository {
       },
     });
     if (!result) return null;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return PrismaUserMapper.toDomain(result);
   }
 

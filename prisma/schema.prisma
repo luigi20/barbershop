@@ -14,15 +14,29 @@ datasource db {
 }
 
 model Organization {
-  id         String   @id
+  id         String       @id
   name       String
-  onwer      User     @relation(fields: [owner_id], references: [id])
-  owner_id   String   @map("owner_id")
+  onwer      User         @relation(fields: [owner_id], references: [id])
+  owner_id   String       @map("owner_id")
   created_at DateTime
   updated_at DateTime
   members    Member[]
+  open_hours Open_Hours[]
 
   @@map("organizations")
+}
+
+model Open_Hours {
+  id              String       @id
+  organization_id String       @map("owner_id")
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  day_week        Int
+  open_time       DateTime
+  close_time      DateTime
+  created_at      DateTime
+  updated_at      DateTime
+
+  @@map("open_hours")
 }
 
 model User {
