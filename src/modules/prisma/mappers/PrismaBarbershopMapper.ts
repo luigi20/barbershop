@@ -1,0 +1,29 @@
+import { Barbershop } from '@modules/barbershop/shared/entities/barbershop.entity';
+import { BarbershopRelations as RawBarbershop } from '@prisma/client';
+import { PrismaUserMapper } from './PrismaUserMapper';
+
+export class PrismaBarbershopMapper {
+  static toPrisma(barbershop: Barbershop) {
+    return {
+      id: barbershop.id,
+      name: barbershop.name,
+      owner_id: barbershop.owner_id,
+      created_at: barbershop.created_at,
+      updated_at: barbershop.updated_at,
+    };
+  }
+
+  static toDomain(raw: RawBarbershop): Barbershop {
+    return new Barbershop(
+      {
+        name: raw.name,
+        owner_id: raw.owner_id,
+        owner_name: null,
+        created_at: raw.created_at,
+        updated_at: raw.updated_at,
+        owner: raw.onwer ? PrismaUserMapper.toDomain(raw.onwer) : null,
+      },
+      raw.id,
+    );
+  }
+}

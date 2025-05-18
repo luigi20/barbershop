@@ -12,13 +12,13 @@ declare module '@prisma/client' {
     organizations?: OrganizationRelations[];
   }
 
-  export interface OrganizationRelations {
+  export interface BarbershopRelations {
     id: string;
     name: string;
-    onwer: UserRelations;
     owner_id: string;
     created_at: Date;
     updated_at: Date;
+    onwer?: UserRelations;
     members?: MemberRelations[];
   }
 

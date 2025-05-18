@@ -13,30 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Barbershop {
-  id         String       @id
-  name       String
-  onwer      User         @relation(fields: [owner_id], references: [id])
-  owner_id   String       @map("owner_id")
-  created_at DateTime
-  updated_at DateTime
-  members    Member[]
-  open_hours Open_Hours[]
-
-  @@map("barbershops")
-}
-
 model Open_Hours {
   id            String     @id
   barbershop_id String     @map("barbershop_id")
-  barbershop    Barbershop @relation(fields: [barbershop_id], references: [id])
+  barbershop    Barbershop @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
   day_week      Int
   open_time     DateTime   @db.Time()
   close_time    DateTime   @db.Time()
   created_at    DateTime
   updated_at    DateTime
 
+  @@index([barbershop_id])
   @@map("open_hours")
+}
+
+model Barbershop {
+  id         String       @id
+  name       String
+  owner      User         @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  owner_id   String       @map("owner_id")
+  created_at DateTime
+  updated_at DateTime
+  members    Member[]
+  open_hours Open_Hours[]
+
+  @@index([owner_id])
+  @@map("barbershops")
 }
 
 model User {
@@ -67,5 +69,6 @@ model Member {
   barbershop    Barbershop @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
 
   @@unique([barbershop_id, user_id])
+  @@index([barbershop_id])
   @@map("members")
 }

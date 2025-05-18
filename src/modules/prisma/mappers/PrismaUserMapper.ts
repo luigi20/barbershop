@@ -5,7 +5,6 @@ export class PrismaUserMapper {
     return {
       id: user.id,
       name: user.name,
-      user_id: user.name,
       email: user.email,
       password: user.password,
       created_at: user.created_at,

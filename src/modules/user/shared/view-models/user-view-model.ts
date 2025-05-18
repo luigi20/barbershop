@@ -7,8 +7,6 @@ export class UserViewModel {
       name: user.name,
       email: user.email,
       password: '',
-      created_at: user.created_at,
-      updated_at: user.updated_at,
       //   user: barber.user ? barber.user : null,
     };
   }
