@@ -28,7 +28,10 @@
       ],
       "@infra/*":[
         "src/infra/*"
-      ]
+      ],
+       "@utils/*": [
+        "src/utils/*"
+      ],
     }
   }
 }

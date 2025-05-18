@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Organization {
+model Barbershop {
   id         String       @id
   name       String
   onwer      User         @relation(fields: [owner_id], references: [id])
@@ -23,46 +23,49 @@ model Organization {
   members    Member[]
   open_hours Open_Hours[]
 
-  @@map("organizations")
+  @@map("barbershops")
 }
 
 model Open_Hours {
-  id              String       @id
-  organization_id String       @map("owner_id")
-  organization    Organization @relation(fields: [organization_id], references: [id])
-  day_week        Int
-  open_time       DateTime
-  close_time      DateTime
-  created_at      DateTime
-  updated_at      DateTime
+  id            String     @id
+  barbershop_id String     @map("barbershop_id")
+  barbershop    Barbershop @relation(fields: [barbershop_id], references: [id])
+  day_week      Int
+  open_time     DateTime   @db.Time()
+  close_time    DateTime   @db.Time()
+  created_at    DateTime
+  updated_at    DateTime
 
   @@map("open_hours")
 }
 
 model User {
-  id            String         @id
-  name          String
-  email         String         @unique
-  password      String
-  created_at    DateTime
-  updated_at    DateTime
-  member_on     Member[]
-  organizations Organization[]
+  id          String       @id
+  name        String
+  email       String       @unique
+  password    String
+  created_at  DateTime
+  updated_at  DateTime
+  member_on   Member[]
+  barbershops Barbershop[]
 }
 
 enum Role {
   ADMIN
   BARBER
+  CLIENT
 }
 
 model Member {
-  id              String       @id
-  role            Role         @default(BARBER)
-  organization_id String       @map("organization_id")
-  user_id         String       @map("user_id")
-  user            User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  organization    Organization @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  id            String     @id
+  role          Role       @default(BARBER)
+  barbershop_id String     @map("barbershop_id")
+  user_id       String     @map("user_id")
+  created_at    DateTime
+  updated_at    DateTime
+  user          User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  barbershop    Barbershop @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
 
-  @@unique([organization_id, user_id])
+  @@unique([barbershop_id, user_id])
   @@map("members")
 }
