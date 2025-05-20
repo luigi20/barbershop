@@ -5,6 +5,10 @@ import { Replace } from 'src/utils/replace';
 export interface Barbershop_Props {
   owner_id: string;
   name: string;
+  street: string;
+  number: number;
+  city: string;
+  phone: string | null;
   created_at: Date;
   updated_at: Date;
   owner_name: string | null;
@@ -23,6 +27,7 @@ export class Barbershop {
         updated_at?: Date;
         owner?: User | null;
         owner_name?: string | null;
+        phone?: string | null;
       }
     >,
     id?: string,
@@ -34,6 +39,7 @@ export class Barbershop {
       updated_at: props.updated_at ?? new Date(),
       owner: props.owner ?? null,
       owner_name: props.owner_name ?? null,
+      phone: props.phone ?? null,
     };
   }
 
@@ -47,6 +53,38 @@ export class Barbershop {
 
   public set owner_id(owner_id: string) {
     this.props.owner_id = owner_id;
+  }
+
+  public get street(): string {
+    return this.props.street;
+  }
+
+  public set street(street: string) {
+    this.props.street = street;
+  }
+
+  public get number(): number {
+    return this.props.number;
+  }
+
+  public set number(number: number) {
+    this.props.number = number;
+  }
+
+  public get city(): string {
+    return this.props.city;
+  }
+
+  public set city(city: string) {
+    this.props.city = city;
+  }
+
+  public get phone(): string | null {
+    return this.props.phone;
+  }
+
+  public set phone(phone: string) {
+    this.props.phone = phone;
   }
 
   public get name(): string {

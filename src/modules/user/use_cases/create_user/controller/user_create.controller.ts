@@ -9,7 +9,12 @@ export class UserCreateController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    const result = await this.userCreateService.execute(createUserDto);
+    const result = await this.userCreateService.execute({
+      email: createUserDto.email,
+      name: createUserDto.name,
+      password: createUserDto.password,
+      role: createUserDto.role,
+    });
     return UserViewModel.toHttp(result);
   }
 }

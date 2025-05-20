@@ -2,8 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@modules/user/shared/entities/user.entity';
 import { IUserRepository } from '@modules/user/shared/repositories/abstract_class/IUserRepository';
 import bcrypt from 'bcrypt';
-import { UpdateUserDto } from '../dto/update_user.dto';
 import { AppError } from '@utils/apperror';
+
+interface IUserUpdateRequest {
+  email: string;
+  name: string;
+  password: string;
+  role: string;
+  id: string;
+}
+
 @Injectable()
 export class UserUpdateService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -12,7 +20,7 @@ export class UserUpdateService {
     name,
     password,
     id,
-  }: UpdateUserDto): Promise<User> {
+  }: IUserUpdateRequest): Promise<User> {
     const user_exists = await this.userRepository.findById(id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const saltRounds = 12;

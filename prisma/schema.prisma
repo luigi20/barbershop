@@ -32,6 +32,10 @@ model Barbershop {
   name       String
   owner      User         @relation(fields: [owner_id], references: [id], onDelete: Cascade)
   owner_id   String       @map("owner_id")
+  street     String
+  number     Int
+  city       String
+  phone      String?      @db.VarChar()
   created_at DateTime
   updated_at DateTime
   members    Member[]
@@ -45,7 +49,7 @@ model User {
   id          String       @id
   name        String
   email       String       @unique
-  password    String
+  password    String       @db.VarChar(50)
   created_at  DateTime
   updated_at  DateTime
   member_on   Member[]

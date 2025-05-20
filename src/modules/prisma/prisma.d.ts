@@ -16,6 +16,10 @@ declare module '@prisma/client' {
     id: string;
     name: string;
     owner_id: string;
+    street: string;
+    number: number;
+    city: string;
+    phone: string | null;
     created_at: Date;
     updated_at: Date;
     onwer?: UserRelations;

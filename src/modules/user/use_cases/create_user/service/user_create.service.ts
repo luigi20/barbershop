@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '@modules/user/shared/entities/user.entity';
 import { IUserRepository } from '@modules/user/shared/repositories/abstract_class/IUserRepository';
 import bcrypt from 'bcrypt';
 import { AppError } from '@utils/apperror';
+
+interface IUserCreateRequest {
+  email: string;
+  name: string;
+  password: string;
+  role: string;
+}
 @Injectable()
 export class UserCreateService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -12,7 +18,7 @@ export class UserCreateService {
     name,
     password,
     role,
-  }: CreateUserDto): Promise<User> {
+  }: IUserCreateRequest): Promise<User> {
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
     const user_exists = await this.userRepository.findByEmail(email);
