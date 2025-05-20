@@ -30,7 +30,6 @@ class UserRepository implements IUserRepository {
       },
     });
     if (!result) return null;
-
     return PrismaUserMapper.toDomain(result);
   }
 
