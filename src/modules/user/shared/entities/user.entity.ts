@@ -5,6 +5,7 @@ export interface User_Props {
   password: string;
   email: string;
   name: string;
+  role: string;
   phone: string;
   created_at: Date;
   updated_at: Date;
@@ -42,6 +43,14 @@ export class User {
 
   public set password(password: string) {
     this.props.password = password;
+  }
+
+  public get role(): string {
+    return this.props.role;
+  }
+
+  public set role(role: string) {
+    this.props.role = role;
   }
 
   public get phone(): string {

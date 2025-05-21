@@ -21,7 +21,7 @@ describe('Test in setting Barbershop module', () => {
     const updated_barbershop = await update_barbershop_service.execute({
       city: 'deefefef',
       name: 'Brutal',
-      number: 3232,
+      number: '3232',
       street: 'Rua das Mangabeiras',
       user_id: '123456',
       phone: '55119302928390',
@@ -40,7 +40,7 @@ describe('Test in setting Barbershop module', () => {
       update_barbershop_service.execute({
         city: 'deefefef',
         name: 'Brutal',
-        number: 3232,
+        number: '3232',
         street: 'Rua das Mangabeiras',
         user_id: '123456',
         id: '123456',
@@ -59,7 +59,7 @@ describe('Test in setting Barbershop module', () => {
       update_barbershop_service.execute({
         city: 'deefefef',
         name: 'Brutal',
-        number: 3232,
+        number: '3232',
         street: 'Rua das Mangabeiras',
         user_id: '123456',
         id: '123456',
@@ -83,7 +83,7 @@ describe('Test in setting Barbershop module', () => {
       update_barbershop_service.execute({
         city: 'deefefef',
         name: 'Brutal',
-        number: 3232,
+        number: '3232',
         street: 'Rua das Mangabeiras',
         user_id: '123456',
         id: '123456',

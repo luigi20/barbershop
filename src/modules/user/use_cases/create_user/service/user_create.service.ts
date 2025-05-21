@@ -33,6 +33,7 @@ export class UserCreateService {
       password: hash_password,
       name: name,
       phone: phone,
+      role: role,
     });
     await this.userRepository.create(user);
     return user;

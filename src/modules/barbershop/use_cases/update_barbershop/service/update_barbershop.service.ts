@@ -9,7 +9,7 @@ interface IBarbershopUpdateRequest {
   name: string;
   user_id: string;
   street: string;
-  number: number;
+  number: string;
   city: string;
   phone?: string;
 }

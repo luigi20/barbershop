@@ -6,7 +6,7 @@ export function makeBarbershop(override: Override = {}) {
     {
       name: 'teste',
       owner_id: '123456',
-      number: 223,
+      number: '223',
       city: 'rua 20',
       phone: '11992303059',
       street: 'ddfdfd',

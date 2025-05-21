@@ -32,9 +32,9 @@ model Barbershop {
   name       String
   owner      User         @relation(fields: [owner_id], references: [id], onDelete: Cascade)
   owner_id   String       @map("owner_id")
-  street     String
-  number     Int
-  city       String
+  street     String       @db.VarChar(100)
+  number     String       @db.VarChar(40)
+  city       String       @db.VarChar(120)
   phone      String?      @db.VarChar()
   created_at DateTime
   updated_at DateTime
@@ -50,6 +50,7 @@ model User {
   name        String
   email       String       @unique
   password    String       @db.VarChar(50)
+  role        Role         @default(CLIENT)
   phone       String       @db.Char(11)
   created_at  DateTime
   updated_at  DateTime

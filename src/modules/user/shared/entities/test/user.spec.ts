@@ -7,6 +7,7 @@ describe('Create User', () => {
       name: 'teste',
       phone: '5511987364958',
       password: '123456',
+      role: 'ADMIN',
     });
     expect(user).toBeTruthy();
   });

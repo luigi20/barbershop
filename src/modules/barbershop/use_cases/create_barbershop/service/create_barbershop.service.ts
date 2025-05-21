@@ -3,12 +3,14 @@ import { IUserRepository } from '@modules/user/shared/repositories/abstract_clas
 import { AppError } from '@utils/apperror';
 import { IBarbershopRepository } from '@modules/barbershop/shared/repositories/abstract_class/IBarbershopRepository';
 import { Barbershop } from '@modules/barbershop/shared/entities/barbershop.entity';
+import { IMemberRepository } from '@modules/member/shared/repositories/abstract_class/IMemberRepository';
+import { Member } from '@modules/member/shared/entities/member.entity';
 
 interface IBarbershopCreateRequest {
   name: string;
   owner_id: string;
   street: string;
-  number: number;
+  number: string;
   city: string;
   phone?: string;
 }
@@ -17,6 +19,7 @@ export class BarbershopCreateService {
   constructor(
     private readonly barbershopRepository: IBarbershopRepository,
     private readonly userRepository: IUserRepository,
+    private readonly memberRepository: IMemberRepository,
   ) {}
   public async execute({
     owner_id,
@@ -39,6 +42,12 @@ export class BarbershopCreateService {
     });
     await this.barbershopRepository.create(barbershop);
     barbershop.owner_name = user_exists.name;
+    const member = new Member({
+      barbershop_id: barbershop.id,
+      role: 'ADMIN',
+      user_id: user_exists.id,
+    });
+    await this.memberRepository.create(member);
     return barbershop;
   }
 }

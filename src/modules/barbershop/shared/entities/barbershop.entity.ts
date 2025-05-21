@@ -6,7 +6,7 @@ export interface Barbershop_Props {
   owner_id: string;
   name: string;
   street: string;
-  number: number;
+  number: string;
   city: string;
   phone: string | null;
   created_at: Date;
@@ -63,11 +63,11 @@ export class Barbershop {
     this.props.street = street;
   }
 
-  public get number(): number {
+  public get number(): string {
     return this.props.number;
   }
 
-  public set number(number: number) {
+  public set number(number: string) {
     this.props.number = number;
   }
 

@@ -6,7 +6,7 @@ describe('Create Barbershop', () => {
       name: 'teste',
       owner_id: '123456',
       street: 'ddeee',
-      number: 223,
+      number: '223',
       city: 'rua 20',
       phone: '11992303059',
     });

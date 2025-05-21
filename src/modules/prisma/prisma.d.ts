@@ -9,6 +9,7 @@ declare module '@prisma/client' {
     name: string;
     email: string;
     phone: string;
+    role: string;
     password: string;
     created_at: Date;
     updated_at: Date;
@@ -21,7 +22,7 @@ declare module '@prisma/client' {
     name: string;
     owner_id: string;
     street: string;
-    number: number;
+    number: string;
     city: string;
     phone: string | null;
     created_at: Date;
