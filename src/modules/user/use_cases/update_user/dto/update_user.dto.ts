@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsUUID } from 'class-validator';
+import { IsEmail, IsPhoneNumber, IsString, IsUUID } from 'class-validator';
 
 export class UpdateUserDto {
   @IsUUID()
@@ -6,6 +6,9 @@ export class UpdateUserDto {
 
   @IsString()
   name: string;
+
+  @IsPhoneNumber()
+  phone: string;
 
   @IsEmail()
   email: string;

@@ -9,6 +9,7 @@ interface IUserCreateRequest {
   name: string;
   password: string;
   role: string;
+  phone: string;
 }
 @Injectable()
 export class UserCreateService {
@@ -18,6 +19,7 @@ export class UserCreateService {
     name,
     password,
     role,
+    phone,
   }: IUserCreateRequest): Promise<User> {
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
@@ -30,6 +32,7 @@ export class UserCreateService {
       email: email,
       password: hash_password,
       name: name,
+      phone: phone,
     });
     await this.userRepository.create(user);
     return user;

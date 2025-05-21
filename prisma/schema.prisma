@@ -50,6 +50,7 @@ model User {
   name        String
   email       String       @unique
   password    String       @db.VarChar(50)
+  phone       String       @db.Char(11)
   created_at  DateTime
   updated_at  DateTime
   member_on   Member[]

@@ -5,6 +5,7 @@ describe('Create User', () => {
     const user = new User({
       email: 'teste@gmail.com',
       name: 'teste',
+      phone: '5511987364958',
       password: '123456',
     });
     expect(user).toBeTruthy();

@@ -7,6 +7,7 @@ export function makeUser(override: Override = {}) {
       email: 'teste@gmail.com',
       name: 'teste',
       password: '123456',
+      phone: '5511987364958',
       ...override,
     },
     '123456',

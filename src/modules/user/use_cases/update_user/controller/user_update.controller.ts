@@ -15,6 +15,7 @@ export class UserUpdateController {
       name: updateUserDto.name,
       password: updateUserDto.password,
       role: updateUserDto.role,
+      phone: updateUserDto.phone,
     });
     return UserViewModel.toHttp(result);
   }

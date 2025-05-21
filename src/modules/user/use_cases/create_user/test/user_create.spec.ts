@@ -15,6 +15,7 @@ describe('Test in setting user module', () => {
       email: 'teste2@gmail.com',
       name: 'Luis',
       password: '123456',
+      phone: '5511988275940',
       role: 'ADMIN',
     });
     expect(userRepository.list_user).toHaveLength(1);
@@ -29,6 +30,7 @@ describe('Test in setting user module', () => {
         email: 'teste@gmail.com',
         name: 'Luis',
         password: '123456',
+        phone: '5511988275940',
         role: 'ADMIN',
       }),
     ).rejects.toThrow('Usuário já cadastrado com este email');
@@ -41,6 +43,7 @@ describe('Test in setting user module', () => {
         email: 'teste@gmail.com',
         name: 'Luis',
         password: '123456',
+        phone: '5511988275940',
         role: 'MEMBER',
       }),
     ).rejects.toThrow('Papel de usuário não permitido no sistema');

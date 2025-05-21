@@ -14,6 +14,7 @@ export class UserCreateController {
       name: createUserDto.name,
       password: createUserDto.password,
       role: createUserDto.role,
+      phone: createUserDto.phone,
     });
     return UserViewModel.toHttp(result);
   }

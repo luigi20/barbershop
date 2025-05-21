@@ -6,6 +6,7 @@ export class PrismaUserMapper {
       id: user.id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
       password: user.password,
       created_at: user.created_at,
       updated_at: user.updated_at,
@@ -17,6 +18,7 @@ export class PrismaUserMapper {
       {
         name: raw.name,
         email: raw.email,
+        phone: raw.phone,
         password: raw.password,
         created_at: raw.created_at,
         updated_at: raw.updated_at,

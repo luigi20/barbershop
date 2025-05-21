@@ -5,6 +5,7 @@ export interface User_Props {
   password: string;
   email: string;
   name: string;
+  phone: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -41,6 +42,14 @@ export class User {
 
   public set password(password: string) {
     this.props.password = password;
+  }
+
+  public get phone(): string {
+    return this.props.phone;
+  }
+
+  public set phone(phone: string) {
+    this.props.phone = phone;
   }
 
   public get name(): string {

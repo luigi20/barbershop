@@ -7,6 +7,7 @@ export class UserViewModel {
       name: user.name,
       email: user.email,
       password: '',
+      phone: user.phone,
       //   user: barber.user ? barber.user : null,
     };
   }

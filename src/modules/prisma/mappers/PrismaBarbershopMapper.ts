@@ -29,7 +29,7 @@ export class PrismaBarbershopMapper {
         phone: raw.phone ? raw.phone : null,
         created_at: raw.created_at,
         updated_at: raw.updated_at,
-        owner: raw.onwer ? PrismaUserMapper.toDomain(raw.onwer) : null,
+        owner: raw.owner ? PrismaUserMapper.toDomain(raw.owner) : null,
       },
       raw.id,
     );

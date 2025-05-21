@@ -8,6 +8,7 @@ interface IUserUpdateRequest {
   email: string;
   name: string;
   password: string;
+  phone: string;
   role: string;
   id: string;
 }
@@ -20,6 +21,7 @@ export class UserUpdateService {
     name,
     password,
     id,
+    phone,
   }: IUserUpdateRequest): Promise<User> {
     const user_exists = await this.userRepository.findById(id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
@@ -28,6 +30,7 @@ export class UserUpdateService {
     user_exists.name = name;
     user_exists.password = hash_password;
     user_exists.email = email;
+    user_exists.phone = phone;
     user_exists.updated_at = new Date();
     await this.userRepository.update(user_exists);
     return user_exists;

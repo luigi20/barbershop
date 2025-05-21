@@ -17,6 +17,7 @@ describe('Test in setting user module', () => {
       name: 'Luis',
       password: '123456',
       id: '123456',
+      phone: '5511988275940',
       role: 'ADMIN',
     });
     expect(userRepository.list_user[0]).toEqual(updated_user);
@@ -30,6 +31,7 @@ describe('Test in setting user module', () => {
         name: 'Luis',
         password: '123456',
         role: 'MEMBER',
+        phone: '5511988275940',
         id: '123456',
       }),
     ).rejects.toThrow('Usuário não existe');
