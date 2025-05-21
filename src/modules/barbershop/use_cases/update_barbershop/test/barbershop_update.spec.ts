@@ -3,13 +3,18 @@ import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/i
 import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
 import { BarbershopUpdateService } from '../service/update_barbershop.service';
 import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
+import { inMemoryOpenHoursRepository } from '@modules/open_hours/shared/repositories/test/inMemoryOpenHoursRepository';
+import { makeOpenHours } from '@modules/open_hours/shared/entities/test/open-hours-factory';
+import { CreateOpenHoursDTO } from '@modules/open_hours/shared/dto/createOpenHoursDTO';
 
 describe('Test in setting Barbershop module', () => {
   let userRepository: inMemoryUserRepository;
   let barbershopRepository: inMemoryBarbershopRepository;
+  let openHoursRepository: inMemoryOpenHoursRepository;
   beforeEach(() => {
     userRepository = new inMemoryUserRepository();
     barbershopRepository = new inMemoryBarbershopRepository();
+    openHoursRepository = new inMemoryOpenHoursRepository();
   });
   it('should update Barbershop', async () => {
     userRepository.list_user.push(makeUser());
@@ -17,10 +22,15 @@ describe('Test in setting Barbershop module', () => {
     const update_barbershop_service = new BarbershopUpdateService(
       barbershopRepository,
       userRepository,
+      openHoursRepository,
     );
+    const list_hours: CreateOpenHoursDTO[] = [];
+    list_hours.push(makeOpenHours());
+    list_hours.push(makeOpenHours());
     const updated_barbershop = await update_barbershop_service.execute({
       city: 'deefefef',
       name: 'Brutal',
+      list_open_hours: list_hours,
       number: '3232',
       street: 'Rua das Mangabeiras',
       user_id: '123456',
@@ -35,11 +45,16 @@ describe('Test in setting Barbershop module', () => {
     const update_barbershop_service = new BarbershopUpdateService(
       barbershopRepository,
       userRepository,
+      openHoursRepository,
     );
+    const list_hours: CreateOpenHoursDTO[] = [];
+    list_hours.push(makeOpenHours());
+    list_hours.push(makeOpenHours());
     await expect(
       update_barbershop_service.execute({
         city: 'deefefef',
         name: 'Brutal',
+        list_open_hours: list_hours,
         number: '3232',
         street: 'Rua das Mangabeiras',
         user_id: '123456',
@@ -54,11 +69,16 @@ describe('Test in setting Barbershop module', () => {
     const update_barbershop_service = new BarbershopUpdateService(
       barbershopRepository,
       userRepository,
+      openHoursRepository,
     );
+    const list_hours: CreateOpenHoursDTO[] = [];
+    list_hours.push(makeOpenHours());
+    list_hours.push(makeOpenHours());
     await expect(
       update_barbershop_service.execute({
         city: 'deefefef',
         name: 'Brutal',
+        list_open_hours: list_hours,
         number: '3232',
         street: 'Rua das Mangabeiras',
         user_id: '123456',
@@ -78,12 +98,17 @@ describe('Test in setting Barbershop module', () => {
     const update_barbershop_service = new BarbershopUpdateService(
       barbershopRepository,
       userRepository,
+      openHoursRepository,
     );
+    const list_hours: CreateOpenHoursDTO[] = [];
+    list_hours.push(makeOpenHours());
+    list_hours.push(makeOpenHours());
     await expect(
       update_barbershop_service.execute({
         city: 'deefefef',
         name: 'Brutal',
         number: '3232',
+        list_open_hours: list_hours,
         street: 'Rua das Mangabeiras',
         user_id: '123456',
         id: '123456',

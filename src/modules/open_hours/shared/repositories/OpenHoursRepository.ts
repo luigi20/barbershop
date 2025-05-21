@@ -16,26 +16,23 @@ class OpenHoursRepository implements IOpenHoursRepository {
     return list_open_hours.map((item) => PrismaOpenHoursMapper.toDomain(item));
   }
 
-  async create(data: Open_Hours): Promise<void> {
-    const raw = PrismaOpenHoursMapper.toPrisma(data);
-    await this.prisma.open_Hours.create({
+  async createMany(data: Open_Hours[]): Promise<void> {
+    const raw = data.map((item) => PrismaOpenHoursMapper.toPrisma(item));
+    await this.prisma.open_Hours.createMany({
       data: raw,
     });
   }
 
-  async update(data: Open_Hours): Promise<void> {
-    const raw = PrismaOpenHoursMapper.toPrisma(data);
-    await this.prisma.open_Hours.update({
-      where: {
-        id: data.id,
-      },
+  async updateMany(data: Open_Hours[]): Promise<void> {
+    const raw = data.map((item) => PrismaOpenHoursMapper.toPrisma(item));
+    await this.prisma.open_Hours.updateMany({
       data: raw,
     });
   }
-  async delete(id: string): Promise<void> {
-    await this.prisma.open_Hours.delete({
+  async deleteMany(barbershop_id: string): Promise<void> {
+    await this.prisma.open_Hours.deleteMany({
       where: {
-        id: id,
+        barbershop_id: barbershop_id,
       },
     });
   }

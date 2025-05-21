@@ -1,4 +1,5 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { CreateOpenHoursDTO } from '@modules/open_hours/shared/dto/createOpenHoursDTO';
+import { IsArray, IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class UpdateBarbershopDto {
   @IsString()
@@ -19,4 +20,7 @@ export class UpdateBarbershopDto {
   @IsOptional()
   @IsString()
   phone: string;
+
+  @IsArray()
+  list_open_hours: CreateOpenHoursDTO[];
 }

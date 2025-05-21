@@ -10,7 +10,7 @@ export class BarbershopUpdateController {
   ) {}
 
   @Put(':id')
-  async create(
+  async update(
     @Body() updateBarbershopDto: UpdateBarbershopDto,
     @Param('id') id: string,
   ) {
@@ -22,6 +22,7 @@ export class BarbershopUpdateController {
       user_id: '123456',
       phone: updateBarbershopDto.phone,
       street: updateBarbershopDto.street,
+      list_open_hours: updateBarbershopDto.list_open_hours,
     });
     return BarbershopViewModel.toHttp(result);
   }

@@ -13,6 +13,8 @@ import { IUserRepository } from '@modules/user/shared/repositories/abstract_clas
 import { UserRepository } from '@modules/user/shared/repositories/UserRepository';
 import { IMemberRepository } from '@modules/member/shared/repositories/abstract_class/IMemberRepository';
 import { MemberRepository } from '@modules/member/shared/repositories/MemberRepository';
+import { IOpenHoursRepository } from '@modules/open_hours/shared/repositories/abstract_class/IOpenHoursRepository';
+import { OpenHoursRepository } from '@modules/open_hours/shared/repositories/OpenHoursRepository';
 
 @Module({
   controllers: [
@@ -37,6 +39,10 @@ import { MemberRepository } from '@modules/member/shared/repositories/MemberRepo
     {
       provide: IMemberRepository,
       useClass: MemberRepository,
+    },
+    {
+      provide: IOpenHoursRepository,
+      useClass: OpenHoursRepository,
     },
   ],
 })

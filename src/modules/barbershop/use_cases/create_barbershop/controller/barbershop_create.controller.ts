@@ -18,6 +18,7 @@ export class BarbershopCreateController {
       owner_id: createBarbershopDto.owner_id,
       phone: createBarbershopDto.phone,
       street: createBarbershopDto.street,
+      list_open_hours: createBarbershopDto.list_open_hours,
     });
     return BarbershopViewModel.toHttp(result);
   }

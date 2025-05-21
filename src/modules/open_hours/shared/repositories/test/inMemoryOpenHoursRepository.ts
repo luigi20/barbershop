@@ -14,20 +14,15 @@ export class inMemoryOpenHoursRepository implements IOpenHoursRepository {
     return list_open_hours;
   }
 
-  async create(data: Open_Hours): Promise<void> {
-    this.list_open_hours.push(data);
+  async createMany(data: Open_Hours[]): Promise<void> {
+    this.list_open_hours = [...this.list_open_hours, ...data];
   }
 
-  async update(data: Open_Hours): Promise<void> {
-    const open_hoursIndex = this.list_open_hours.findIndex(
-      (item) => item.id === data.id,
-    );
-    if (open_hoursIndex >= 0) {
-      this.list_open_hours[open_hoursIndex] = data;
-    }
+  async updateMany(data: Open_Hours[]): Promise<void> {
+    this.list_open_hours = data;
   }
 
-  async delete(id: string): Promise<void> {
+  async deleteMany(id: string): Promise<void> {
     const open_hoursIndex = this.list_open_hours.findIndex(
       (item) => item.id === id,
     );
