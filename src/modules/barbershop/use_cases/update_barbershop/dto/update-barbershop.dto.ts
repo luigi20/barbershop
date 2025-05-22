@@ -17,6 +17,9 @@ export class UpdateBarbershopDto {
   @IsString()
   city: string;
 
+  @IsString()
+  status: string;
+
   @IsOptional()
   @IsString()
   phone: string;

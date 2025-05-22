@@ -45,6 +45,7 @@ export class BarbershopCreateService {
       phone: phone,
       name: name,
       city: city,
+      status: 'FECHADA',
     });
     await this.barbershopRepository.create(barbershop);
     const list_create_open_hours: Open_Hours[] = [];

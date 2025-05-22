@@ -36,6 +36,7 @@ model Barbershop {
   number            String              @db.VarChar(40)
   city              String              @db.VarChar(120)
   phone             String?             @db.VarChar()
+  status            Status_Barbershop   @default(ABERTA)
   created_at        DateTime
   updated_at        DateTime
   members           Member[]
@@ -76,6 +77,11 @@ model BarbershopService {
   @@map("barbershop_services")
 }
 
+enum Status_Barbershop {
+  ABERTA
+  FECHADA
+}
+
 model Promotions {
   id                    String            @id
   barbershop_service    BarbershopService @relation(fields: [barbershop_service_id], references: [id], onDelete: Cascade)
@@ -97,7 +103,6 @@ model Attendance {
   services             AttendanceServices[]
   created_at           DateTime
   updated_at           DateTime
-  Scheduling           Scheduling?
 
   @@index([barbershop_id])
   @@index([barber_attendance_id])
@@ -109,17 +114,6 @@ enum Attendance_Status {
   REAGENDADO
   AGENDADO
   FINALIZADO
-}
-
-model Scheduling {
-  id            String     @id
-  attendance    Attendance @relation(fields: [attendance_id], references: [id], onDelete: Cascade)
-  attendance_id String     @unique
-  scheduled_at  DateTime
-  created_at    DateTime
-  updated_at    DateTime
-
-  @@map("scheduling")
 }
 
 model AttendanceServices {

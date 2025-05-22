@@ -8,6 +8,7 @@ describe('Create User', () => {
       phone: '5511987364958',
       password: '123456',
       role: 'ADMIN',
+      status: 'ativo',
     });
     expect(user).toBeTruthy();
   });

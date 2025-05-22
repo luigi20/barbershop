@@ -1,6 +1,7 @@
 import type {
   PrismaClient as OriginalPrismaClient,
   Role,
+  Status_Barbershop,
 } from '@prisma/client';
 declare module '@prisma/client' {
   export { OriginalPrismaClient as PrismaClient };
@@ -9,6 +10,7 @@ declare module '@prisma/client' {
     name: string;
     email: string;
     phone: string;
+    status: string;
     role: string;
     password: string;
     created_at: Date;
@@ -32,6 +34,7 @@ declare module '@prisma/client' {
     id: string;
     name: string;
     owner_id: string;
+    status: Status_Barbershop;
     street: string;
     number: string;
     city: string;

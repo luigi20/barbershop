@@ -7,6 +7,7 @@ export class BarbershopViewModel {
       name_barbershop: barbershop.name,
       owner_name: barbershop.owner_name,
       owner_id: barbershop.owner_id,
+      status: barbershop.status,
       //   user: barber.user ? barber.user : null,
     };
   }

@@ -7,6 +7,7 @@ export interface Barbershop_Props {
   name: string;
   street: string;
   number: string;
+  status: string;
   city: string;
   phone: string | null;
   created_at: Date;
@@ -53,6 +54,14 @@ export class Barbershop {
 
   public set owner_id(owner_id: string) {
     this.props.owner_id = owner_id;
+  }
+
+  public get status(): string {
+    return this.props.status;
+  }
+
+  public set status(status: string) {
+    this.props.status = status;
   }
 
   public get street(): string {

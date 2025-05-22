@@ -1,5 +1,8 @@
 import { Barbershop } from '@modules/barbershop/shared/entities/barbershop.entity';
-import { BarbershopRelations as RawBarbershop } from '@prisma/client';
+import {
+  BarbershopRelations as RawBarbershop,
+  Status_Barbershop,
+} from '@prisma/client';
 import { PrismaUserMapper } from './PrismaUserMapper';
 
 export class PrismaBarbershopMapper {
@@ -8,6 +11,7 @@ export class PrismaBarbershopMapper {
       id: barbershop.id,
       name: barbershop.name,
       owner_id: barbershop.owner_id,
+      status: barbershop.status as Status_Barbershop,
       street: barbershop.street,
       number: barbershop.number,
       city: barbershop.city,
@@ -22,6 +26,7 @@ export class PrismaBarbershopMapper {
       {
         name: raw.name,
         owner_id: raw.owner_id,
+        status: raw.status as string,
         owner_name: null,
         street: raw.street,
         number: raw.number,

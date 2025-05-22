@@ -15,6 +15,7 @@ interface IBarbershopUpdateRequest {
   number: string;
   city: string;
   list_open_hours: CreateOpenHoursDTO[];
+  status: string;
   phone?: string;
 }
 @Injectable()
@@ -33,6 +34,7 @@ export class BarbershopUpdateService {
     phone,
     city,
     list_open_hours,
+    status,
   }: IBarbershopUpdateRequest): Promise<Barbershop> {
     const user_exists = await this.userRepository.findById(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
@@ -48,6 +50,7 @@ export class BarbershopUpdateService {
         phone: phone,
         name: name,
         city: city,
+        status: status,
       },
       barbershop_exists.id,
     );

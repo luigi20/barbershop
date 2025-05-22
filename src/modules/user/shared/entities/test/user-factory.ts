@@ -9,6 +9,7 @@ export function makeUser(override: Override = {}) {
       password: '123456',
       phone: '5511987364958',
       role: 'ADMIN',
+      status: 'ativo',
       ...override,
     },
     '123456',

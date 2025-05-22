@@ -9,6 +9,7 @@ describe('Create Barbershop', () => {
       number: '223',
       city: 'rua 20',
       phone: '11992303059',
+      status: 'aberta',
     });
     expect(barbershop).toBeTruthy();
   });

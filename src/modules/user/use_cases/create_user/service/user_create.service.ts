@@ -34,6 +34,7 @@ export class UserCreateService {
       name: name,
       phone: phone,
       role: role,
+      status: 'ativo',
     });
     await this.userRepository.create(user);
     return user;

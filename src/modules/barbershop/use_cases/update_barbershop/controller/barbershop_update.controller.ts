@@ -23,6 +23,7 @@ export class BarbershopUpdateController {
       phone: updateBarbershopDto.phone,
       street: updateBarbershopDto.street,
       list_open_hours: updateBarbershopDto.list_open_hours,
+      status: updateBarbershopDto.status,
     });
     return BarbershopViewModel.toHttp(result);
   }
