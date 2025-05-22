@@ -9,11 +9,24 @@ import { Role } from '@prisma/client';
 class MemberRepository implements IMemberRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findByAllMemberBarbeshopIds(barbershop_id: string): Promise<string[]> {
+  async findByAllMemberBarberIds(barbershop_id: string): Promise<string[]> {
     const result_list = await this.prisma.member.findMany({
       where: {
         barbershop_id: barbershop_id,
         role: 'BARBER',
+      },
+      select: {
+        user_id: true,
+      },
+    });
+    return result_list.map((item) => item.user_id);
+  }
+
+  async findByAllMemberClientIds(barbershop_id: string): Promise<string[]> {
+    const result_list = await this.prisma.member.findMany({
+      where: {
+        barbershop_id: barbershop_id,
+        role: 'CLIENT',
       },
       select: {
         user_id: true,

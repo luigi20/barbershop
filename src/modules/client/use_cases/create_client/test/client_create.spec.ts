@@ -1,0 +1,138 @@
+import { makeUser } from '@modules/user/shared/entities/test/user-factory';
+import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
+import { inMemoryMemberRepository } from '@modules/member/shared/repositories/test/inMemoryMemberRepository';
+import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
+import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
+import { makeMember } from '@modules/member/shared/entities/test/member-factory';
+import { ClientCreateService } from '../service/client_create.service';
+
+// Mock do método Cryptography.encrypt
+
+describe('Test in setting client module', () => {
+  let userRepository: inMemoryUserRepository;
+  let memberRepository: inMemoryMemberRepository;
+  let barbershopRepository: inMemoryBarbershopRepository;
+  beforeEach(() => {
+    userRepository = new inMemoryUserRepository();
+    memberRepository = new inMemoryMemberRepository();
+    barbershopRepository = new inMemoryBarbershopRepository();
+  });
+  it('should add client', async () => {
+    userRepository.list_user.push(
+      makeUser({
+        role: 'ADMIN',
+      }),
+    );
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
+      }),
+    );
+    const client_user_service = new ClientCreateService(
+      userRepository,
+      memberRepository,
+      barbershopRepository,
+    );
+    const client_user = await client_user_service.execute({
+      email: 'teste2@gmail.com',
+      name: 'Luis',
+      password: '123456',
+      phone: '5511988275940',
+      barbershop_id: barbershopRepository.list_barbershop[0].id,
+      role: 'CLIENT',
+    });
+    expect(userRepository.list_user).toHaveLength(2);
+    expect(userRepository.list_user[1]).toEqual(client_user);
+  });
+
+  it('should add client because role not exists', async () => {
+    userRepository.list_user.push(
+      makeUser({
+        role: 'ADMIN',
+      }),
+    );
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
+      }),
+    );
+    const client_user_service = new ClientCreateService(
+      userRepository,
+      memberRepository,
+      barbershopRepository,
+    );
+    await expect(
+      client_user_service.execute({
+        email: 'teste@gmail.com',
+        name: 'Luis',
+        password: '123456',
+        barbershop_id: '123456',
+        phone: '5511988275940',
+        role: 'MEMBER',
+      }),
+    ).rejects.toThrow('Papel não permitido no sistema');
+  });
+
+  it('should not add client because barbershop not exists', async () => {
+    userRepository.list_user.push(
+      makeUser({
+        role: 'ADMIN',
+      }),
+    );
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
+      }),
+    );
+    const client_user_service = new ClientCreateService(
+      userRepository,
+      memberRepository,
+      barbershopRepository,
+    );
+    await expect(
+      client_user_service.execute({
+        email: 'teste@gmail.com',
+        name: 'Luis',
+        password: '123456',
+        barbershop_id: '123',
+        phone: '5511988275940',
+        role: 'CLIENT',
+      }),
+    ).rejects.toThrow('Barbearia não existe');
+  });
+
+  it('should not add a client because a client already exists in the barber shop ', async () => {
+    userRepository.list_user.push(
+      makeUser({
+        role: 'ADMIN',
+      }),
+    );
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
+      }),
+    );
+    memberRepository.list_member.push(
+      makeMember({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        user_id: userRepository.list_user[0].id,
+        role: 'CLIENT',
+      }),
+    );
+    const client_user_service = new ClientCreateService(
+      userRepository,
+      memberRepository,
+      barbershopRepository,
+    );
+    await expect(
+      client_user_service.execute({
+        email: 'teste@gmail.com',
+        name: 'Luis',
+        password: '123456',
+        barbershop_id: '123456',
+        phone: '5511988275940',
+        role: 'CLIENT',
+      }),
+    ).rejects.toThrow('Barbeiro já cadastrado com este email nesta barbearia');
+  });
+});
