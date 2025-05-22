@@ -1,3 +1,4 @@
+import { Member } from '@modules/member/shared/entities/member.entity';
 import { randomUUID } from 'crypto';
 import { Replace } from 'src/utils/replace';
 
@@ -10,6 +11,7 @@ export interface User_Props {
   phone: string;
   created_at: Date;
   updated_at: Date;
+  member_on: Member[];
 }
 
 export class User {
@@ -22,6 +24,7 @@ export class User {
       {
         created_at?: Date;
         updated_at?: Date;
+        member_on?: Member[];
       }
     >,
     id?: string,
@@ -31,11 +34,16 @@ export class User {
       ...props,
       created_at: props.created_at ?? new Date(),
       updated_at: props.updated_at ?? new Date(),
+      member_on: props.member_on ?? [],
     };
   }
 
   public get id() {
     return this._id;
+  }
+
+  public get member_on(): Member[] {
+    return this.props.member_on;
   }
 
   public get password(): string {

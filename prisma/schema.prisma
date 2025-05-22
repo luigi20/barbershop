@@ -35,7 +35,7 @@ model Barbershop {
   street            String              @db.VarChar(100)
   number            String              @db.VarChar(40)
   city              String              @db.VarChar(120)
-  phone             String?             @db.VarChar()
+  phone             String?             @db.VarChar(13)
   status            Status_Barbershop   @default(ABERTA)
   created_at        DateTime
   updated_at        DateTime
@@ -136,7 +136,7 @@ model User {
   email       String       @unique
   password    String       @db.VarChar(50)
   role        Role         @default(CLIENT)
-  phone       String       @db.Char(11)
+  phone       String       @db.Char(13)
   status      String       @db.VarChar()
   created_at  DateTime
   updated_at  DateTime

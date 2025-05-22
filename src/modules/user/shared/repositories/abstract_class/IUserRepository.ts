@@ -5,6 +5,7 @@ abstract class IUserRepository {
   abstract findById(id: string): Promise<User | null>;
   abstract findByAll(): Promise<User[]>;
   abstract findByEmail(email: string): Promise<User | null>;
+  abstract findByIds(ids: string[]): Promise<User[]>;
   abstract update(data: User): Promise<void>;
   abstract delete(id: string): Promise<void>;
 }

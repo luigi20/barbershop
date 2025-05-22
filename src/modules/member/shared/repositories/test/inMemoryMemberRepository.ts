@@ -5,6 +5,12 @@ import { IMemberRepository } from '../abstract_class/IMemberRepository';
 
 @Injectable()
 export class inMemoryMemberRepository implements IMemberRepository {
+  async findByAllMemberBarbeshopIds(barbershop_id: string): Promise<string[]> {
+    const member_list = this.list_member.filter(
+      (item) => item.barbershop_id === barbershop_id && item.role === 'BARBER',
+    );
+    return member_list.map((item) => item.user_id);
+  }
   async findById(
     user_id: string,
     barbershop_id: string,

@@ -25,9 +25,9 @@ export class UserCreateService {
     const hash_password = await bcrypt.hash(password, saltRounds);
     const user_exists = await this.userRepository.findByEmail(email);
     if (user_exists) throw new AppError('Usuário já cadastrado com este email');
-    const list_users = ['ADMIN', 'BARBER', 'CLIENT'];
+    const list_users = ['ADMIN'];
     if (!list_users.includes(role))
-      throw new AppError('Papel de usuário não permitido no sistema');
+      throw new AppError('Papel não permitido no sistema');
     const user = new User({
       email: email,
       password: hash_password,

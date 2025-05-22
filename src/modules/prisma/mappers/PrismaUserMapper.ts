@@ -1,5 +1,6 @@
 import { User } from '@modules/user/shared/entities/user.entity';
 import { UserRelations as RawUser, Role } from '@prisma/client';
+
 export class PrismaUserMapper {
   static toPrisma(user: User) {
     return {

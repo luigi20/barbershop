@@ -33,6 +33,17 @@ class UserRepository implements IUserRepository {
     return PrismaUserMapper.toDomain(result);
   }
 
+  async findByIds(ids: string[]): Promise<User[]> {
+    const result = await this.prisma.user.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+    return result.map((item) => PrismaUserMapper.toDomain(item));
+  }
+
   async findByAll(): Promise<User[]> {
     const result = await this.prisma.user.findMany();
 
