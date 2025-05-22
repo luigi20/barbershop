@@ -11,6 +11,8 @@ import { UserGetAllController } from './use_cases/getall_user/controller/user_ge
 import { UserGetAllService } from './use_cases/getall_user/service/user_getall.service';
 import { UserGetController } from './use_cases/get_user/controller/user_get.controller';
 import { UserGetService } from './use_cases/get_user/service/user_get.service';
+import { IMemberRepository } from '@modules/member/shared/repositories/abstract_class/IMemberRepository';
+import { MemberRepository } from '@modules/member/shared/repositories/MemberRepository';
 
 @Module({
   controllers: [
@@ -29,6 +31,10 @@ import { UserGetService } from './use_cases/get_user/service/user_get.service';
     {
       provide: IUserRepository,
       useClass: UserRepository,
+    },
+    {
+      provide: IMemberRepository,
+      useClass: MemberRepository,
     },
   ],
 })

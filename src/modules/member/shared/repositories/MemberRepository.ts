@@ -34,6 +34,21 @@ class MemberRepository implements IMemberRepository {
     });
     return result_list.map((item) => item.user_id);
   }
+
+  async findByAllMemberNOTClientIds(barbershop_id: string): Promise<string[]> {
+    const result_list = await this.prisma.member.findMany({
+      where: {
+        barbershop_id: barbershop_id,
+        role: {
+          not: 'CLIENT',
+        },
+      },
+      select: {
+        user_id: true,
+      },
+    });
+    return result_list.map((item) => item.user_id);
+  }
   async findByAllMemberBarbeshop(barbershop_id: string): Promise<Member[]> {
     const result_list = await this.prisma.member.findMany({
       where: {
