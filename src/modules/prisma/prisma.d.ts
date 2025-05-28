@@ -1,4 +1,4 @@
-import type {
+import {
   PrismaClient as OriginalPrismaClient,
   Role,
   Status_Barbershop,
