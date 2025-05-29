@@ -4,6 +4,7 @@ import {
   Status_Barbershop,
 } from '@prisma/client';
 import { PrismaUserMapper } from './PrismaUserMapper';
+import { PrismaOpenHoursMapper } from './PrismaOpenHoursMapper';
 
 export class PrismaBarbershopMapper {
   static toPrisma(barbershop: Barbershop) {
@@ -37,6 +38,9 @@ export class PrismaBarbershopMapper {
         created_at: raw.created_at,
         updated_at: raw.updated_at,
         owner: raw.owner ? PrismaUserMapper.toDomain(raw.owner) : null,
+        open_hours: raw.open_hours
+          ? raw.open_hours.map((item) => PrismaOpenHoursMapper.toDomain(item))
+          : [],
       },
       raw.id,
     );

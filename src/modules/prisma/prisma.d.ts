@@ -44,6 +44,7 @@ declare module '@prisma/client' {
     updated_at: Date;
     owner?: UserRelations;
     members?: MemberRelations[];
+    open_hours?: OpenHoursRelations[];
   }
 
   export interface ServiceRelations {

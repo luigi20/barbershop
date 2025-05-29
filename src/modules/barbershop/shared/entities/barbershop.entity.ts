@@ -1,3 +1,4 @@
+import { Open_Hours } from '@modules/open_hours/shared/entities/open_hours.entity';
 import { User } from '@modules/user/shared/entities/user.entity';
 import { randomUUID } from 'crypto';
 import { Replace } from 'src/utils/replace';
@@ -15,6 +16,7 @@ export interface Barbershop_Props {
   updated_at: Date;
   owner_name: string | null;
   owner: User | null;
+  open_hours: Open_Hours[];
 }
 
 export class Barbershop {
@@ -31,6 +33,7 @@ export class Barbershop {
         owner_name?: string | null;
         phone?: string | null;
         instagram?: string | null;
+        open_hours?: Open_Hours[];
       }
     >,
     id?: string,
@@ -44,6 +47,7 @@ export class Barbershop {
       owner_name: props.owner_name ?? null,
       phone: props.phone ?? null,
       instagram: props.instagram ?? null,
+      open_hours: props.open_hours ?? [],
     };
   }
 
@@ -57,6 +61,10 @@ export class Barbershop {
 
   public set owner_id(owner_id: string) {
     this.props.owner_id = owner_id;
+  }
+
+  public get open_hours(): Open_Hours[] {
+    return this.props.open_hours;
   }
 
   public get status(): string {
