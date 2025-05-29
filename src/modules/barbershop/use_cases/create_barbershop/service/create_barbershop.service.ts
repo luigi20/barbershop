@@ -14,6 +14,7 @@ interface IBarbershopCreateRequest {
   owner_id: string;
   street: string;
   number: string;
+  instagram: string;
   city: string;
   list_open_hours: CreateOpenHoursDTO[];
   phone?: string;
@@ -32,6 +33,7 @@ export class BarbershopCreateService {
     street,
     number,
     phone,
+    instagram,
     city,
     list_open_hours,
   }: IBarbershopCreateRequest): Promise<Barbershop> {
@@ -43,6 +45,7 @@ export class BarbershopCreateService {
       street: street,
       number: number,
       phone: phone,
+      instagram: instagram,
       name: name,
       city: city,
       status: 'FECHADA',

@@ -24,6 +24,36 @@ async function main() {
       created_at: now,
       updated_at: now,
     },
+    {
+      id: randomUUID(),
+      name: 'Alinhamento Capilar',
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      id: randomUUID(),
+      name: 'Pigmentação',
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      id: randomUUID(),
+      name: 'Platinado',
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      id: randomUUID(),
+      name: 'Luzes',
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      id: randomUUID(),
+      name: 'Corte Infantil',
+      created_at: now,
+      updated_at: now,
+    },
   ];
 
   for (const service of services) {

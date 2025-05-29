@@ -9,6 +9,7 @@ export function makeBarbershop(override: Override = {}) {
       number: '223',
       city: 'rua 20',
       phone: '11992303059',
+      instagram: '21212',
       street: 'ddfdfd',
       status: 'aberta',
       ...override,

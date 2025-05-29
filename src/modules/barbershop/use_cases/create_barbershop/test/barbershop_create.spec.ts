@@ -34,6 +34,7 @@ describe('Test in setting Barbershop module', () => {
       list_open_hours: list_hours,
       name: 'Brutal',
       number: '3232',
+      instagram: '',
       street: 'Rua das Mangabeiras',
       owner_id: '123456',
       phone: '55119302928390',
@@ -60,6 +61,7 @@ describe('Test in setting Barbershop module', () => {
         number: '3232',
         street: 'Rua das Mangabeiras',
         owner_id: '123456',
+        instagram: '',
         phone: '55119302928390',
       }),
     ).rejects.toThrow('Usuário não existe');

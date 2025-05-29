@@ -17,6 +17,7 @@ export class BarbershopCreateController {
       number: createBarbershopDto.number,
       owner_id: createBarbershopDto.owner_id,
       phone: createBarbershopDto.phone,
+      instagram: createBarbershopDto.instagram,
       street: createBarbershopDto.street,
       list_open_hours: createBarbershopDto.list_open_hours,
     });

@@ -21,6 +21,10 @@ export class CreateBarbershopDto {
   @IsString()
   phone: string;
 
+  @IsOptional()
+  @IsString()
+  instagram: string;
+
   @IsArray()
   list_open_hours: CreateOpenHoursDTO[];
 }

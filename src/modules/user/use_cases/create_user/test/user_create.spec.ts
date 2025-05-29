@@ -46,6 +46,6 @@ describe('Test in setting user module', () => {
         phone: '5511988275940',
         role: 'MEMBER',
       }),
-    ).rejects.toThrow('Papel de usuário não permitido no sistema');
+    ).rejects.toThrow('Papel não permitido no sistema');
   });
 });

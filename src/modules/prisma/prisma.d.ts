@@ -39,10 +39,18 @@ declare module '@prisma/client' {
     number: string;
     city: string;
     phone: string | null;
+    instagram: string | null;
     created_at: Date;
     updated_at: Date;
     owner?: UserRelations;
     members?: MemberRelations[];
+  }
+
+  export interface ServiceRelations {
+    id: string;
+    name: string;
+    created_at: Date;
+    updated_at: Date;
   }
 
   export interface MemberRelations {

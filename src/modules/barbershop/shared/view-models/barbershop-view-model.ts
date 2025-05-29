@@ -8,6 +8,8 @@ export class BarbershopViewModel {
       owner_name: barbershop.owner_name,
       owner_id: barbershop.owner_id,
       status: barbershop.status,
+      phone: barbershop.phone,
+      instagram: barbershop.instagram,
       //   user: barber.user ? barber.user : null,
     };
   }

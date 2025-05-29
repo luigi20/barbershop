@@ -10,6 +10,7 @@ export interface Barbershop_Props {
   status: string;
   city: string;
   phone: string | null;
+  instagram: string | null;
   created_at: Date;
   updated_at: Date;
   owner_name: string | null;
@@ -29,6 +30,7 @@ export class Barbershop {
         owner?: User | null;
         owner_name?: string | null;
         phone?: string | null;
+        instagram?: string | null;
       }
     >,
     id?: string,
@@ -41,6 +43,7 @@ export class Barbershop {
       owner: props.owner ?? null,
       owner_name: props.owner_name ?? null,
       phone: props.phone ?? null,
+      instagram: props.instagram ?? null,
     };
   }
 
@@ -62,6 +65,14 @@ export class Barbershop {
 
   public set status(status: string) {
     this.props.status = status;
+  }
+
+  public get instagram(): string | null {
+    return this.props.instagram;
+  }
+
+  public set instagram(instagram: string) {
+    this.props.instagram = instagram;
   }
 
   public get street(): string {
