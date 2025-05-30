@@ -5,7 +5,7 @@ import { UserModule } from '@modules/user/user.module';
 import { PrismaModule } from '@modules/prisma/prisma.module';
 import { BarbershopModule } from '@modules/barbershop/barbershop.module';
 import { BarberModule } from '@modules/barber/barber.module';
-import { ServiceModule } from '@modules/services_barbershop/services.module';
+import { ServiceModule } from '@modules/services/services.module';
 
 @Module({
   imports: [

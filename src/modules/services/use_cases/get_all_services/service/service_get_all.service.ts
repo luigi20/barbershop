@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Service } from '@modules/services_barbershop/shared/entities/services.entity';
-import { IServiceRepository } from '@modules/services_barbershop/shared/repositories/abstract_class/IServiceRepository';
+import { Service } from '@modules/services/shared/entities/services.entity';
+import { IServiceRepository } from '@modules/services/shared/repositories/abstract_class/IServiceRepository';
 
 @Injectable()
 export class ServiceGetAllService {

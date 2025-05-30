@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { ServicesViewModel } from '@modules/services_barbershop/shared/view-models/services-view-model';
 import { ServiceGetAllService } from '../service/service_get_all.service';
+import { ServicesViewModel } from '@modules/services/shared/view-models/services-view-model';
 
 @Controller('service')
 export class ServiceGetAllController {

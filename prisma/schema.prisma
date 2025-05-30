@@ -13,55 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Open_Hours {
-  id            String     @id
-  barbershop_id String     @map("barbershop_id")
-  barbershop    Barbershop @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
-  day_week      Int
-  open_time     DateTime   @db.Time()
-  close_time    DateTime   @db.Time()
-  created_at    DateTime
-  updated_at    DateTime
-
-  @@index([barbershop_id])
-  @@map("open_hours")
-}
-
-model Barbershop {
-  id                String              @id
-  name              String
-  owner             User                @relation(fields: [owner_id], references: [id], onDelete: Cascade)
-  owner_id          String              @map("owner_id")
-  street            String              @db.VarChar(100)
-  number            String              @db.VarChar(40)
-  city              String              @db.VarChar(120)
-  phone             String?             @db.VarChar(13)
-  instagram         String?             @db.VarChar()
-  status            Status_Barbershop   @default(ABERTA)
-  created_at        DateTime
-  updated_at        DateTime
-  members           Member[]
-  open_hours        Open_Hours[]
-  Attendance        Attendance[]
-  BarbershopService BarbershopService[]
-
-  @@index([owner_id])
-  @@map("barbershops")
-}
-
-model Services {
-  id                  String               @id
-  name                String               @db.VarChar()
-  created_at          DateTime
-  updated_at          DateTime
-  attendance_services AttendanceServices[]
-  BarbershopService   BarbershopService[]
-
-  @@map("services")
-}
-
 model BarbershopService {
-  id            String       @id
   barbershop    Barbershop   @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
   barbershop_id String
   service       Services     @relation(fields: [service_id], references: [id])
@@ -84,13 +36,15 @@ enum Status_Barbershop {
 }
 
 model Promotions {
-  id                    String            @id
-  barbershop_service    BarbershopService @relation(fields: [barbershop_service_id], references: [id], onDelete: Cascade)
-  barbershop_service_id String
-  discount_amount       Float
-  status                String            @db.VarChar()
+  id                 String            @id
+  barbershop_id      String
+  service_id         String
+  barbershop_service BarbershopService @relation(fields: [barbershop_id, service_id], references: [barbershop_id, service_id], onDelete: Cascade)
+  discount_amount    Float
+  status             String            @db.VarChar()
 
-  @@index([barbershop_service_id])
+  @@index([barbershop_id])
+  @@index([service_id])
   @@map("promotions")
 }
 
@@ -141,6 +95,53 @@ model AttendanceServices {
   @@map("attendance_services")
 }
 
+model Open_Hours {
+  id            String     @id
+  barbershop_id String     @map("barbershop_id")
+  barbershop    Barbershop @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
+  day_week      Int
+  open_time     DateTime   @db.Time()
+  close_time    DateTime   @db.Time()
+  created_at    DateTime
+  updated_at    DateTime
+
+  @@index([barbershop_id])
+  @@map("open_hours")
+}
+
+model Barbershop {
+  id                String              @id
+  name              String
+  owner             User                @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  owner_id          String              @map("owner_id")
+  street            String              @db.VarChar(100)
+  number            String              @db.VarChar(40)
+  city              String              @db.VarChar(120)
+  phone             String?             @db.VarChar(13)
+  instagram         String?             @db.VarChar()
+  status            Status_Barbershop   @default(ABERTA)
+  created_at        DateTime
+  updated_at        DateTime
+  members           Member[]
+  open_hours        Open_Hours[]
+  Attendance        Attendance[]
+  BarbershopService BarbershopService[]
+
+  @@index([owner_id])
+  @@map("barbershops")
+}
+
+model Services {
+  id                  String               @id
+  name                String               @db.VarChar()
+  created_at          DateTime
+  updated_at          DateTime
+  attendance_services AttendanceServices[]
+  BarbershopService   BarbershopService[]
+
+  @@map("services")
+}
+
 model User {
   id          String       @id
   name        String
@@ -167,7 +168,7 @@ enum Role {
 
 model Member {
   id            String     @id
-  role          Role       @default(BARBER)
+  role          Role
   barbershop_id String     @map("barbershop_id")
   user_id       String     @map("user_id")
   created_at    DateTime

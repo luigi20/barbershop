@@ -1,5 +1,5 @@
 import { ServiceRelations as RawService } from '@prisma/client';
-import { Service } from '@modules/services_barbershop/shared/entities/services.entity';
+import { Service } from '@modules/services/shared/entities/services.entity';
 
 export class PrismaServiceMapper {
   static toPrisma(service: Service) {

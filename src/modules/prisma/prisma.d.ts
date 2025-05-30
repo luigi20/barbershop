@@ -47,6 +47,15 @@ declare module '@prisma/client' {
     open_hours?: OpenHoursRelations[];
   }
 
+  export interface BarbershopServiceRelations {
+    barbershop_id: string;
+    service_id: string;
+    duration: number;
+    price: number;
+    created_at: Date;
+    updated_at: Date;
+  }
+
   export interface ServiceRelations {
     id: string;
     name: string;

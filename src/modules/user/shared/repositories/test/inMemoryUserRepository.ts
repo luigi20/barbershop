@@ -25,6 +25,13 @@ export class inMemoryUserRepository implements IUserRepository {
     if (!user) return null;
     return user;
   }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async findByIdRole(id: string): Promise<string | null> {
+    const role = this.list_user.find((item) => item.id === id);
+    if (!role) return null;
+    return role.id;
+  }
   // eslint-disable-next-line @typescript-eslint/require-await
   async update(data: User): Promise<void> {
     const userIndex = this.list_user.findIndex((item) => item.id === data.id);

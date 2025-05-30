@@ -1,5 +1,5 @@
-import { makeService } from '@modules/services_barbershop/shared/entities/test/services-factory';
-import { inMemoryServiceRepository } from '@modules/services_barbershop/shared/repositories/test/inMemoryServiceRepository';
+import { makeService } from '@modules/services/shared/entities/test/services-factory';
+import { inMemoryServiceRepository } from '@modules/services/shared/repositories/test/inMemoryServiceRepository';
 import { ServiceGetAllService } from '../service/service_get_all.service';
 
 // Mock do método Cryptography.encrypt

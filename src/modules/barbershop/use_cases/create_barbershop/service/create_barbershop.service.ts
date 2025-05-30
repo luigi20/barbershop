@@ -48,7 +48,7 @@ export class BarbershopCreateService {
       instagram: instagram,
       name: name,
       city: city,
-      status: 'FECHADA',
+      status: 'ABERTA',
     });
     await this.barbershopRepository.create(barbershop);
     const list_create_open_hours: Open_Hours[] = [];
