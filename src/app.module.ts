@@ -6,6 +6,7 @@ import { PrismaModule } from '@modules/prisma/prisma.module';
 import { BarbershopModule } from '@modules/barbershop/barbershop.module';
 import { BarberModule } from '@modules/barber/barber.module';
 import { ServiceModule } from '@modules/services/services.module';
+import { BarbershopServiceModule } from '@modules/barbershop_services/barbershop_service.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ServiceModule } from '@modules/services/services.module';
     BarbershopModule,
     BarberModule,
     ServiceModule,
+    BarbershopServiceModule,
   ],
   controllers: [],
   providers: [],

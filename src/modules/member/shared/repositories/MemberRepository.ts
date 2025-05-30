@@ -92,7 +92,10 @@ class MemberRepository implements IMemberRepository {
     const raw = PrismaMemberMapper.toPrisma(data);
     await this.prisma.member.update({
       where: {
-        id: data.id,
+        barbershop_id_user_id: {
+          barbershop_id: data.barbershop_id,
+          user_id: data.user_id,
+        },
       },
       data: raw,
     });

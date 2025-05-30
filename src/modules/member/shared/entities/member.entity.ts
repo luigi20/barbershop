@@ -1,6 +1,5 @@
 import { Barbershop } from '@modules/barbershop/shared/entities/barbershop.entity';
 import { User } from '@modules/user/shared/entities/user.entity';
-import { randomUUID } from 'crypto';
 import { Replace } from 'src/utils/replace';
 
 export interface Member_Props {
@@ -14,7 +13,6 @@ export interface Member_Props {
 }
 
 export class Member {
-  private _id: string;
   private props: Member_Props;
 
   constructor(
@@ -27,9 +25,7 @@ export class Member {
         barbershop?: Barbershop | null;
       }
     >,
-    id?: string,
   ) {
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
       created_at: props.created_at ?? new Date(),
@@ -37,10 +33,6 @@ export class Member {
       user: props.user ?? null,
       barbershop: props.barbershop ?? null,
     };
-  }
-
-  public get id() {
-    return this._id;
   }
 
   public get user_id(): string {

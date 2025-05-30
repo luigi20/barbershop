@@ -55,15 +55,20 @@ export class inMemoryMemberRepository implements IMemberRepository {
 
   async update(data: Member): Promise<void> {
     const memberIndex = this.list_member.findIndex(
-      (item) => item.id === data.id,
+      (item) =>
+        item.barbershop_id === data.barbershop_id &&
+        item.user_id === data.user_id,
     );
     if (memberIndex >= 0) {
       this.list_member[memberIndex] = data;
     }
   }
 
-  async delete(id: string): Promise<void> {
-    const memberIndex = this.list_member.findIndex((item) => item.id === id);
+  async delete(user_id: string, barbershop_id: string): Promise<void> {
+    const memberIndex = this.list_member.findIndex(
+      (item) =>
+        item.barbershop_id === barbershop_id && item.user_id === user_id,
+    );
     this.list_member.splice(memberIndex, 1);
   }
 }

@@ -167,7 +167,6 @@ enum Role {
 }
 
 model Member {
-  id            String     @id
   role          Role
   barbershop_id String     @map("barbershop_id")
   user_id       String     @map("user_id")

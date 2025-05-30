@@ -12,8 +12,8 @@ import { ClientGetService } from './use_cases/get_client/service/client_get.serv
 import { ClientGetAllService } from './use_cases/getall_client/service/client_getall.service';
 import { IBarbershopRepository } from '@modules/barbershop/shared/repositories/abstract_class/IBarbershopRepository';
 import { BarbershopRepository } from '@modules/barbershop/shared/repositories/BarbershopRepository';
-import { ClientUpdateController } from './use_cases/update_barber/controller/client_update.controller';
-import { ClientUpdateService } from './use_cases/update_barber/service/client_update.service';
+import { ClientUpdateController } from './use_cases/client_barber/controller/client_update.controller';
+import { ClientUpdateService } from './use_cases/client_barber/service/client_update.service';
 
 @Module({
   controllers: [

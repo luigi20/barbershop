@@ -40,6 +40,8 @@ export class BarbershopUpdateService {
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const barbershop_exists = await this.barbershopRepository.findById(id);
     if (!barbershop_exists) throw new AppError('Barbearia não existe', 404);
+    if (user_exists.role.toLowerCase() !== 'admin')
+      throw new AppError('Usuário não pode cadastrar barbearia');
     if (user_exists.id !== barbershop_exists.owner_id)
       throw new AppError('Somente o proprietário pode alterar informações');
     const barbershop = new Barbershop(

@@ -7,6 +7,10 @@ abstract class IBarbershopServiceRepository {
   abstract findByAll(): Promise<Barbershop_Service[]>;
   abstract update(data: Barbershop_Service): Promise<void>;
   abstract delete(barbershop_id: string, service_id: string): Promise<void>;
+  abstract findByBarbershopIdAndServiceId(
+    barbershop_id: string,
+    service_id: string,
+  ): Promise<Barbershop_Service | null>;
 }
 
 export { IBarbershopServiceRepository };

@@ -64,7 +64,6 @@ declare module '@prisma/client' {
   }
 
   export interface MemberRelations {
-    id: string;
     role: Role;
     barbershop_id: string;
     user_id: string;

@@ -39,7 +39,8 @@ export class BarbershopCreateService {
   }: IBarbershopCreateRequest): Promise<Barbershop> {
     const user_exists = await this.userRepository.findById(owner_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
-    // depois ver se o usuário é admin
+    if (user_exists.role.toLowerCase() !== 'admin')
+      throw new AppError('Usuário não pode cadastrar barbearia');
     const barbershop = new Barbershop({
       owner_id: owner_id,
       street: street,
