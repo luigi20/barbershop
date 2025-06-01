@@ -2,32 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { IUserRepository } from '@modules/user/shared/repositories/abstract_class/IUserRepository';
 import { AppError } from '@utils/apperror';
 import { IBarbershopRepository } from '@modules/barbershop/shared/repositories/abstract_class/IBarbershopRepository';
-import { Barbershop_Service } from '@modules/barbershop_services/shared/entities/barbershop_services.entity';
-import { IBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/abstract_class/IBarbershopServiceRepository';
 import { IServiceRepository } from '@modules/services/shared/repositories/abstract_class/IServiceRepository';
+import { IBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/abstract_class/IBarbershopServiceRepository';
+import { IPromotionRepository } from '@modules/promotions/shared/repositories/abstract_class/IPromotionRepository';
+import { Promotion } from '@modules/promotions/shared/entities/promotion.entity';
 
-interface IBarbershopServiceUpdateRequest {
+interface IPromotionCreateRequest {
   barbershop_id: string;
   service_id: string;
-  duration: number;
+  discount_amount: number;
   user_id: string;
-  price: number;
+  status: string;
 }
 @Injectable()
-export class BarbershopServiceUpdateService {
+export class BarbershopServiceCreateService {
   constructor(
     private readonly barbershopRepository: IBarbershopRepository,
     private readonly userRepository: IUserRepository,
     private readonly serviceRepository: IServiceRepository,
     private readonly barbershopServiceRepository: IBarbershopServiceRepository,
+    private readonly promotionRepository: IPromotionRepository,
   ) {}
   public async execute({
     barbershop_id,
     user_id,
     service_id,
-    price,
-    duration,
-  }: IBarbershopServiceUpdateRequest): Promise<Barbershop_Service> {
+    discount_amount,
+    status,
+  }: IPromotionCreateRequest): Promise<Promotion> {
     const user_exists = await this.userRepository.findById(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const barbershop_exists =
@@ -44,13 +46,13 @@ export class BarbershopServiceUpdateService {
       );
     if (!barbershop_service_exists)
       throw new AppError('Este serviço não existe na barbearia', 404);
-    const barbershop_service = new Barbershop_Service({
+    const promotion = new Promotion({
       barbershop_id: barbershop_id,
-      duration: duration,
-      price: price,
+      discount_amount: discount_amount,
+      status: status,
       service_id: service_id,
     });
-    await this.barbershopServiceRepository.update(barbershop_service);
-    return barbershop_service;
+    await this.promotionRepository.create(promotion);
+    return promotion;
   }
 }

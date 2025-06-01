@@ -5,6 +5,11 @@ import { IPromotionRepository } from '../abstract_class/IPromotionRepository';
 
 @Injectable()
 export class inMemoryPromotionRepository implements IPromotionRepository {
+  async findById(id: string): Promise<Promotion | null> {
+    const promotion = this.list_promotion.find((item) => item.id === id);
+    if (!promotion) return null;
+    return promotion;
+  }
   async findByBarbershopIdAndServiceId(
     barbershop_id: string,
     service_id: string,
@@ -40,19 +45,16 @@ export class inMemoryPromotionRepository implements IPromotionRepository {
 
   async update(data: Promotion): Promise<void> {
     const promotionIndex = this.list_promotion.findIndex(
-      (item) =>
-        item.barbershop_id === data.barbershop_id &&
-        item.service_id === data.service_id,
+      (item) => item.id === data.id,
     );
     if (promotionIndex >= 0) {
       this.list_promotion[promotionIndex] = data;
     }
   }
 
-  async delete(barbershop_id: string, service_id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     const promotionIndex = this.list_promotion.findIndex(
-      (item) =>
-        item.barbershop_id === barbershop_id && item.service_id === service_id,
+      (item) => item.id === id,
     );
     this.list_promotion.splice(promotionIndex, 1);
   }

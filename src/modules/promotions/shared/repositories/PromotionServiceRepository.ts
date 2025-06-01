@@ -7,6 +7,15 @@ import { IPromotionRepository } from './abstract_class/IPromotionRepository';
 @Injectable()
 class PromotionRepository implements IPromotionRepository {
   constructor(private prisma: PrismaService) {}
+  async findById(id: string): Promise<Promotion | null> {
+    const result = await this.prisma.promotion.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!result) return null;
+    return PrismaPromotionMapper.toDomain(result);
+  }
   async findByBarbershopId(id: string): Promise<Promotion[]> {
     const result = await this.prisma.promotion.findMany({
       where: {
@@ -52,21 +61,15 @@ class PromotionRepository implements IPromotionRepository {
     const raw = PrismaPromotionMapper.toPrisma(data);
     await this.prisma.promotion.update({
       where: {
-        barbershop_id_service_id: {
-          barbershop_id: raw.barbershop_id,
-          service_id: raw.service_id,
-        },
+        id: raw.id,
       },
       data: raw,
     });
   }
-  async delete(barbershop_id: string, service_id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     await this.prisma.promotion.delete({
       where: {
-        barbershop_id_service_id: {
-          barbershop_id: barbershop_id,
-          service_id: service_id,
-        },
+        id: id,
       },
     });
   }
