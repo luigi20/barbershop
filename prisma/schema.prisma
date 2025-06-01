@@ -13,24 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Status_Barbershop {
-  ABERTA
-  FECHADA
-}
-
-model Promotions {
-  id                 String            @id
-  barbershop_id      String
-  service_id         String
-  barbershop_service BarbershopService @relation(fields: [barbershop_id, service_id], references: [barbershop_id, service_id], onDelete: Cascade)
-  discount_amount    Float
-  status             String            @db.VarChar()
-
-  @@index([barbershop_id])
-  @@index([service_id])
-  @@map("promotions")
-}
-
 model Attendance {
   id                   String               @id
   barbershop           Barbershop           @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
@@ -76,6 +58,44 @@ model AttendanceServices {
   @@index([attendance_id])
   @@index([service_id])
   @@map("attendance_services")
+}
+
+//Daqui para baixo td feito
+model Promotions {
+  id                 String            @id
+  barbershop_id      String
+  service_id         String
+  barbershop_service BarbershopService @relation(fields: [barbershop_id, service_id], references: [barbershop_id, service_id], onDelete: Cascade)
+  discount_amount    Float
+  status             String            @db.VarChar()
+  created_at         DateTime
+  updated_at         DateTime
+
+  @@index([barbershop_id])
+  @@index([service_id])
+  @@map("promotions")
+}
+
+model BarbershopService {
+  barbershop    Barbershop   @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
+  barbershop_id String
+  service       Services     @relation(fields: [service_id], references: [id])
+  service_id    String
+  duration      Int // Exemplo: duração do serviço em minutos
+  price         Float // Preço personalizado para essa barbearia
+  created_at    DateTime
+  updated_at    DateTime
+  Promotions    Promotions[]
+
+  @@unique([barbershop_id, service_id])
+  @@index([barbershop_id])
+  @@index([service_id])
+  @@map("barbershop_services")
+}
+
+enum Status_Barbershop {
+  ABERTA
+  FECHADA
 }
 
 model Open_Hours {
