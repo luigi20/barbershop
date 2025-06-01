@@ -30,6 +30,17 @@ declare module '@prisma/client' {
     barbershop?: BarbershopRelations;
   }
 
+  export interface PromotionRelations {
+    id: string;
+    barbershop_id: string;
+    service_id: string;
+    discount_amount: number;
+    status: string;
+    created_at: Date;
+    updated_at: Date;
+    barbershop_service?: BarbershopServiceRelations;
+  }
+
   export interface BarbershopRelations {
     id: string;
     name: string;
