@@ -13,21 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Promotions {
-  id                 String            @id
-  barbershop_id      String
-  service_id         String
-  barbershop_service BarbershopService @relation(fields: [barbershop_id, service_id], references: [barbershop_id, service_id], onDelete: Cascade)
-  discount_amount    Float
-  status             String            @db.VarChar()
-  created_at         DateTime
-  updated_at         DateTime
-
-  @@index([barbershop_id])
-  @@index([service_id])
-  @@map("promotions")
-}
-
 model Attendance {
   id                   String               @id
   barbershop           Barbershop           @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
@@ -73,6 +58,22 @@ model AttendanceServices {
   @@index([attendance_id])
   @@index([service_id])
   @@map("attendance_services")
+}
+
+//Daqui para baixo td feito
+model Promotions {
+  id                 String            @id
+  barbershop_id      String
+  service_id         String
+  barbershop_service BarbershopService @relation(fields: [barbershop_id, service_id], references: [barbershop_id, service_id], onDelete: Cascade)
+  discount_amount    Float
+  status             String            @db.VarChar()
+  created_at         DateTime
+  updated_at         DateTime
+
+  @@index([barbershop_id])
+  @@index([service_id])
+  @@map("promotions")
 }
 
 model BarbershopService {
