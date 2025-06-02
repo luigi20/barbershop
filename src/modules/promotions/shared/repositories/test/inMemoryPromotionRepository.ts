@@ -5,6 +5,11 @@ import { IPromotionRepository } from '../abstract_class/IPromotionRepository';
 
 @Injectable()
 export class inMemoryPromotionRepository implements IPromotionRepository {
+  async findBySelectId(id: string): Promise<boolean | null> {
+    const promotion = this.list_promotion.find((item) => item.id === id);
+    if (!promotion) return null;
+    return true;
+  }
   async findById(id: string): Promise<Promotion | null> {
     const promotion = this.list_promotion.find((item) => item.id === id);
     if (!promotion) return null;
