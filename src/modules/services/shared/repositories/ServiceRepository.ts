@@ -3,6 +3,7 @@ import { PrismaService } from '@modules/prisma/service/prisma.service';
 import { Service } from '../entities/services.entity';
 import { PrismaServiceMapper } from '@modules/prisma/mappers/PrismaServiceMapper';
 import { IServiceRepository } from './abstract_class/IServiceRepository';
+import { IdAndName } from '@utils/types';
 
 @Injectable()
 class ServiceRepository implements IServiceRepository {
@@ -22,6 +23,43 @@ class ServiceRepository implements IServiceRepository {
     });
     if (!result) return null;
     return PrismaServiceMapper.toDomain(result);
+  }
+
+  async findByIdAndName(id: string): Promise<IdAndName | null> {
+    const result = await this.prisma.barbershop.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    if (!result) return null;
+    return result;
+  }
+  async findByIdGetAllAndName(): Promise<IdAndName[]> {
+    const result = await this.prisma.barbershop.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    return result;
+  }
+
+  async findByIdSelectId(id: string): Promise<string | null> {
+    const result = await this.prisma.barbershop.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    if (!result) return null;
+    return result.id;
   }
 
   async findByAll(): Promise<Service[]> {

@@ -3,6 +3,7 @@ import { PrismaService } from '@modules/prisma/service/prisma.service';
 import { IBarbershopRepository } from './abstract_class/IBarbershopRepository';
 import { Barbershop } from '../entities/barbershop.entity';
 import { PrismaBarbershopMapper } from '@modules/prisma/mappers/PrismaBarbershopMapper';
+import { IdAndNameAndOwnerBarbershop } from '@utils/types';
 
 @Injectable()
 class BarbershopRepository implements IBarbershopRepository {
@@ -31,6 +32,39 @@ class BarbershopRepository implements IBarbershopRepository {
     });
     if (!result) return null;
     return PrismaBarbershopMapper.toDomain(result);
+  }
+  async findByIdSelectId(id: string): Promise<string | null> {
+    const result = await this.prisma.barbershop.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (!result) return null;
+    return result.id;
+  }
+  async findByIdSelectIdAndNameAndOwnerId(
+    id: string,
+  ): Promise<IdAndNameAndOwnerBarbershop | null> {
+    const result = await this.prisma.barbershop.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+        owner_id: true,
+      },
+    });
+    if (!result) return null;
+    const idAndNameAndOwnerBarbershop: IdAndNameAndOwnerBarbershop = {
+      id: result.id,
+      name: result.name,
+      owner_id: result.owner_id,
+    };
+    return idAndNameAndOwnerBarbershop;
   }
 
   async findByAll(): Promise<Barbershop[]> {

@@ -3,35 +3,47 @@ import { IUserRepository } from '@modules/user/shared/repositories/abstract_clas
 import { AppError } from '@utils/apperror';
 import { IBarbershopRepository } from '@modules/barbershop/shared/repositories/abstract_class/IBarbershopRepository';
 import { IBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/abstract_class/IBarbershopServiceRepository';
+import { Barbershop_Service } from '@modules/barbershop_services/shared/entities/barbershop_services.entity';
 import { IServiceRepository } from '@modules/services/shared/repositories/abstract_class/IServiceRepository';
 
-interface IBarbershopServiceDeleteRequest {
+interface IBarbershopServiceGetAllRequest {
   user_id: string;
   barbershop_id: string;
-  service_id: string;
 }
+
 @Injectable()
-export class BarbershopServiceDeleteService {
+export class BarbershopServiceGetAllService {
   constructor(
-    private readonly barbershopRepository: IBarbershopRepository,
     private readonly userRepository: IUserRepository,
     private readonly barbershopServiceRepository: IBarbershopServiceRepository,
+    private readonly barbershopRepository: IBarbershopRepository,
     private readonly serviceRepository: IServiceRepository,
   ) {}
   public async execute({
     user_id,
     barbershop_id,
-    service_id,
-  }: IBarbershopServiceDeleteRequest): Promise<void> {
+  }: IBarbershopServiceGetAllRequest): Promise<Barbershop_Service[]> {
     const user_exists = await this.userRepository.findByIdSelectId(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const barbershop_exists =
-      await this.barbershopRepository.findByIdSelectId(barbershop_id);
+      await this.barbershopRepository.findByIdSelectIdAndNameAndOwnerId(
+        barbershop_id,
+      );
     if (!barbershop_exists) throw new AppError('Barbearia não existe', 404);
-    const service_exists =
-      await this.serviceRepository.findByIdSelectId(service_id);
-    if (!service_exists)
-      throw new AppError('Serviço não existe na barbearia', 404);
-    await this.barbershopServiceRepository.delete(barbershop_id, service_id);
+    const list_barbershop_service =
+      await this.barbershopServiceRepository.findByBarbershopId(barbershop_id);
+    const services = await this.serviceRepository.findByIdGetAllAndName();
+    if (services.length === 0)
+      throw new AppError('Serviços não cadastrados', 404);
+    for (let i = 0; i < list_barbershop_service.length; i++) {
+      list_barbershop_service[i].barbershop_name = barbershop_exists.name;
+      const match = services.find(
+        (service) => service.id === list_barbershop_service[i].service_id,
+      );
+      if (match) {
+        list_barbershop_service[i].service_name = match.name;
+      }
+    }
+    return list_barbershop_service;
   }
 }

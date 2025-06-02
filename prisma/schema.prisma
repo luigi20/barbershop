@@ -34,9 +34,14 @@ model Schedule {
   id            String     @id
   attendance    Attendance @relation(fields: [attendance_id], references: [id], onDelete: Cascade)
   attendance_id String     @unique
+  user_id       String
+  user          User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
   scheduled_at  DateTime
   created_at    DateTime
   updated_at    DateTime
+
+  @@index([user_id])
+  @@map("schedules")
 }
 
 enum Attendance_Status {
@@ -158,6 +163,7 @@ model User {
   member_on   Member[]
   barbershops Barbershop[]
   Attendance  Attendance[]
+  Schedule    Schedule[]
 
   @@index([role])
   @@map("users")

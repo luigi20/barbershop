@@ -14,8 +14,8 @@ export class ClientUpdateController {
       email: updateClientDto.email,
       name: updateClientDto.name,
       password: updateClientDto.password,
-      role: updateClientDto.role,
       phone: updateClientDto.phone,
+      status: updateClientDto.status,
     });
     return UserViewModel.toHttp(result);
   }

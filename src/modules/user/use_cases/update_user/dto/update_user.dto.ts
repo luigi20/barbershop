@@ -1,4 +1,10 @@
-import { IsEmail, IsPhoneNumber, IsString, IsUUID } from 'class-validator';
+import {
+  IsEmail,
+  IsIn,
+  IsPhoneNumber,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class UpdateUserDto {
   @IsUUID()
@@ -17,5 +23,10 @@ export class UpdateUserDto {
   password: string;
 
   @IsString()
+  @IsIn(['ATIVO', 'INATIVO'])
+  status: 'ATIVO' | 'INATIVO';
+
+  @IsString()
+  @IsIn(['ADMIN', 'BARBER', 'CLIENT'])
   role: 'ADMIN' | 'BARBER' | 'CLIENT';
 }

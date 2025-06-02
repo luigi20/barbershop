@@ -38,6 +38,20 @@ class BarbershopServiceRepository implements IBarbershopServiceRepository {
     return PrismaBarbershopServiceMapper.toDomain(result);
   }
 
+  async findByBarbershopIdAndServiceIdBoolean(
+    barbershop_id: string,
+    service_id: string,
+  ): Promise<boolean | null> {
+    const result = await this.prisma.barbershopService.findFirst({
+      where: {
+        service_id: service_id,
+        barbershop_id: barbershop_id,
+      },
+    });
+    if (!result) return null;
+    return true;
+  }
+
   async create(data: Barbershop_Service): Promise<void> {
     const raw = PrismaBarbershopServiceMapper.toPrisma(data);
     await this.prisma.barbershopService.create({

@@ -5,6 +5,7 @@ abstract class IPromotionRepository {
   abstract findByBarbershopId(id: string): Promise<Promotion[]>;
   abstract findByServiceId(id: string): Promise<Promotion[]>;
   abstract findById(id: string): Promise<Promotion | null>;
+  abstract findBySelectId(id: string): Promise<boolean | null>;
   abstract findByAll(): Promise<Promotion[]>;
   abstract update(data: Promotion): Promise<void>;
   abstract delete(id: string): Promise<void>;

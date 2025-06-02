@@ -21,10 +21,10 @@ export class PromotionGetAllService {
     user_id,
     barbershop_id,
   }: IPromotionGetAllRequest): Promise<Promotion[]> {
-    const user_exists = await this.userRepository.findById(user_id);
+    const user_exists = await this.userRepository.findByIdSelectId(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const barbershop_exists =
-      await this.barbershopRepository.findById(barbershop_id);
+      await this.barbershopRepository.findByIdSelectId(barbershop_id);
     if (!barbershop_exists) throw new AppError('Barbearia não existe', 404);
     const list_promotion =
       await this.promotionRepository.findByBarbershopId(barbershop_id);

@@ -11,11 +11,10 @@ export class BarbershopGetService {
     private readonly userRepository: IUserRepository,
   ) {}
   public async execute(user_id: string): Promise<Barbershop[]> {
-    const user_exists = await this.userRepository.findById(user_id);
+    const user_exists = await this.userRepository.findByIdSelectId(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
-    const list_barbershop = await this.barbershopRepository.findByOwnerId(
-      user_exists.id,
-    );
+    const list_barbershop =
+      await this.barbershopRepository.findByOwnerId(user_exists);
     return list_barbershop;
   }
 }

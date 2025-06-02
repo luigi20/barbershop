@@ -13,7 +13,6 @@ export class BarberCreateController {
       email: createBarberDto.email,
       name: createBarberDto.name,
       password: createBarberDto.password,
-      role: createBarberDto.role,
       phone: createBarberDto.phone,
       barbershop_id: createBarberDto.barbershop_id,
     });

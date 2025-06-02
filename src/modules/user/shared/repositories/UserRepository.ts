@@ -3,6 +3,7 @@ import { PrismaService } from '@modules/prisma/service/prisma.service';
 import { User } from '../entities/user.entity';
 import { IUserRepository } from './abstract_class/IUserRepository';
 import { PrismaUserMapper } from '@modules/prisma/mappers/PrismaUserMapper';
+import { IdAndName } from '@utils/types';
 
 @Injectable()
 class UserRepository implements IUserRepository {
@@ -31,6 +32,37 @@ class UserRepository implements IUserRepository {
     });
     if (!result) return null;
     return PrismaUserMapper.toDomain(result);
+  }
+
+  async findByIdAndName(id: string): Promise<IdAndName | null> {
+    const result = await this.prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    if (!result) return null;
+    const idAndName: IdAndName = {
+      id: result.id,
+      name: result.name,
+    };
+    return idAndName;
+  }
+
+  async findByIdSelectId(id: string): Promise<string | null> {
+    const result = await this.prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (!result) return null;
+    return result.id;
   }
 
   async findByIdRole(id: string): Promise<string | null> {

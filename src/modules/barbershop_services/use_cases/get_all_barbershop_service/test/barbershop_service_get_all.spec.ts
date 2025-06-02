@@ -4,7 +4,7 @@ import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/reposit
 import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
 import { inMemoryBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/test/inMemoryBarbershopServiceRepository';
 import { makeBarbershopService } from '@modules/barbershop_services/shared/entities/test/barbershop_services-factory';
-import { BarbershopServiceGetService } from '../service/get_barbershop_service.service';
+import { BarbershopServiceGetAllService } from '../service/get_all_barbershop_service.service';
 import { inMemoryServiceRepository } from '@modules/services/shared/repositories/test/inMemoryServiceRepository';
 import { makeService } from '@modules/services/shared/entities/test/services-factory';
 
@@ -18,17 +18,19 @@ describe('Test in setting Barbershop module', () => {
     barbershopRepository = new inMemoryBarbershopRepository();
     barbershopServiceRepository = new inMemoryBarbershopServiceRepository();
     serviceRepository = new inMemoryServiceRepository();
-  });
-  it('should get Barbershop Service', async () => {
-    userRepository.list_user.push(makeUser());
     serviceRepository.list_service.push(makeService());
+  });
+  it('should get Barbershop Service list', async () => {
+    userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
+    serviceRepository.list_service.push(makeService());
     barbershopServiceRepository.list_barbershop_service.push(
       makeBarbershopService({
         barbershop_id: '123456',
+        service_id: '123456',
       }),
     );
-    const get_barbershop_service = new BarbershopServiceGetService(
+    const get_barbershop_service = new BarbershopServiceGetAllService(
       userRepository,
       barbershopServiceRepository,
       barbershopRepository,
@@ -37,23 +39,22 @@ describe('Test in setting Barbershop module', () => {
     const get_barbershop = await get_barbershop_service.execute({
       barbershop_id: '123456',
       user_id: '123456',
-      service_id: serviceRepository.list_service[0].id,
     });
     expect(barbershopServiceRepository.list_barbershop_service).toEqual(
       get_barbershop,
     );
   });
 
-  it('should not get Barbershop Service, because user not exists', async () => {
+  it('should not get Barbershop Service list, because user not exists', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
     barbershopServiceRepository.list_barbershop_service.push(
       makeBarbershopService({
         barbershop_id: '123456',
+        service_id: '123456',
       }),
     );
-    serviceRepository.list_service.push(makeService());
-    const get_barbershop_service = new BarbershopServiceGetService(
+    const get_barbershop_service = new BarbershopServiceGetAllService(
       userRepository,
       barbershopServiceRepository,
       barbershopRepository,
@@ -63,21 +64,20 @@ describe('Test in setting Barbershop module', () => {
       get_barbershop_service.execute({
         barbershop_id: '123456',
         user_id: '1234568',
-        service_id: serviceRepository.list_service[0].id,
       }),
     ).rejects.toThrow('Usuário não existe');
   });
 
-  it('should not get Barbershop Service, because narbershop service not exists', async () => {
+  it('should not get Barbershop Service list, because narbershop service not exists', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
     barbershopServiceRepository.list_barbershop_service.push(
       makeBarbershopService({
         barbershop_id: '123456',
+        service_id: '123456',
       }),
     );
-    serviceRepository.list_service.push(makeService());
-    const get_barbershop_service = new BarbershopServiceGetService(
+    const get_barbershop_service = new BarbershopServiceGetAllService(
       userRepository,
       barbershopServiceRepository,
       barbershopRepository,
@@ -87,7 +87,6 @@ describe('Test in setting Barbershop module', () => {
       get_barbershop_service.execute({
         barbershop_id: '1234560',
         user_id: '123456',
-        service_id: serviceRepository.list_service[0].id,
       }),
     ).rejects.toThrow('Barbearia não existe');
   });

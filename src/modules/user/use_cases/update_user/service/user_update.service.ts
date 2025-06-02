@@ -10,6 +10,7 @@ interface IUserUpdateRequest {
   password: string;
   phone: string;
   role: string;
+  status: string;
   id: string;
 }
 
@@ -21,18 +22,23 @@ export class UserUpdateService {
     name,
     password,
     id,
+    role,
     phone,
+    status,
   }: IUserUpdateRequest): Promise<User> {
-    const user_exists = await this.userRepository.findById(id);
+    const user_exists = await this.userRepository.findByIdSelectId(id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
-    user_exists.name = name;
-    user_exists.password = hash_password;
-    user_exists.email = email;
-    user_exists.phone = phone;
-    user_exists.updated_at = new Date();
-    await this.userRepository.update(user_exists);
-    return user_exists;
+    const user = new User({
+      email: email,
+      password: hash_password,
+      name: name,
+      phone: phone,
+      role: role,
+      status: status,
+    });
+    await this.userRepository.update(user);
+    return user;
   }
 }

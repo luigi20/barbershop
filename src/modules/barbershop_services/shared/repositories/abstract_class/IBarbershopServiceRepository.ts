@@ -11,6 +11,10 @@ abstract class IBarbershopServiceRepository {
     barbershop_id: string,
     service_id: string,
   ): Promise<Barbershop_Service | null>;
+  abstract findByBarbershopIdAndServiceIdBoolean(
+    barbershop_id: string,
+    service_id: string,
+  ): Promise<boolean | null>;
 }
 
 export { IBarbershopServiceRepository };

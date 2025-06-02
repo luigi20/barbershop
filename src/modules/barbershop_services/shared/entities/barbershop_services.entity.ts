@@ -3,6 +3,8 @@ import { Replace } from 'src/utils/replace';
 export interface Barbershop_Service_Props {
   service_id: string;
   barbershop_id: string;
+  service_name: string | null;
+  barbershop_name: string | null;
   duration: number;
   price: number;
   created_at: Date;
@@ -18,6 +20,8 @@ export class Barbershop_Service {
       {
         created_at?: Date;
         updated_at?: Date;
+        service_name?: string | null;
+        barbershop_name?: string | null;
       }
     >,
   ) {
@@ -25,6 +29,8 @@ export class Barbershop_Service {
       ...props,
       created_at: props.created_at ?? new Date(),
       updated_at: props.updated_at ?? new Date(),
+      service_name: props.service_name ?? null,
+      barbershop_name: props.barbershop_name ?? null,
     };
   }
 
@@ -42,6 +48,22 @@ export class Barbershop_Service {
 
   public set barbershop_id(barbershop_id: string) {
     this.props.barbershop_id = barbershop_id;
+  }
+
+  public get service_name(): string | null {
+    return this.props.service_name;
+  }
+
+  public set service_name(service_name: string) {
+    this.props.service_name = service_name;
+  }
+
+  public get barbershop_name(): string | null {
+    return this.props.barbershop_name;
+  }
+
+  public set barbershop_name(barbershop_name: string) {
+    this.props.barbershop_name = barbershop_name;
   }
 
   public get price(): number {

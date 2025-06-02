@@ -2,6 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { Barbershop } from '../../entities/barbershop.entity';
 import { IBarbershopRepository } from '../abstract_class/IBarbershopRepository';
+import { IdAndNameAndOwnerBarbershop } from '@utils/types';
 
 @Injectable()
 export class inMemoryBarbershopRepository implements IBarbershopRepository {
@@ -18,6 +19,18 @@ export class inMemoryBarbershopRepository implements IBarbershopRepository {
     return this.list_barbershop;
   }
 
+  async findByIdSelectIdAndNameAndOwnerId(
+    id: string,
+  ): Promise<IdAndNameAndOwnerBarbershop | null> {
+    const barbershop = this.list_barbershop.find((item) => item.id === id);
+    if (!barbershop) return null;
+    return {
+      id: barbershop.id,
+      name: barbershop.name,
+      owner_id: barbershop.owner_id,
+    };
+  }
+
   async create(data: Barbershop): Promise<void> {
     this.list_barbershop.push(data);
   }
@@ -26,6 +39,11 @@ export class inMemoryBarbershopRepository implements IBarbershopRepository {
     const barbershop = this.list_barbershop.find((item) => item.id === id);
     if (!barbershop) return null;
     return barbershop;
+  }
+  async findByIdSelectId(id: string): Promise<string | null> {
+    const barbershop = this.list_barbershop.find((item) => item.id === id);
+    if (!barbershop) return null;
+    return barbershop.id;
   }
 
   async update(data: Barbershop): Promise<void> {

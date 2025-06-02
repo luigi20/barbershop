@@ -7,6 +7,17 @@ import { IBarbershopServiceRepository } from '../abstract_class/IBarbershopServi
 export class inMemoryBarbershopServiceRepository
   implements IBarbershopServiceRepository
 {
+  async findByBarbershopIdAndServiceIdBoolean(
+    barbershop_id: string,
+    service_id: string,
+  ): Promise<boolean | null> {
+    const barbershop_service = this.list_barbershop_service.find(
+      (item) =>
+        item.barbershop_id === barbershop_id && item.service_id === service_id,
+    );
+    if (!barbershop_service) return null;
+    return true;
+  }
   async findByBarbershopIdAndServiceId(
     barbershop_id: string,
     service_id: string,

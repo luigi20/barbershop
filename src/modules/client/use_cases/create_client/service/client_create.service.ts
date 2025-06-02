@@ -33,7 +33,7 @@ export class ClientCreateService {
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
     const barbershop_exists =
-      await this.barbershopRepository.findById(barbershop_id);
+      await this.barbershopRepository.findByIdSelectId(barbershop_id);
     if (!barbershop_exists) throw new AppError('Barbearia não existe', 404);
     const user_exists = await this.clientRepository.findByEmail(email);
     if (user_exists) {

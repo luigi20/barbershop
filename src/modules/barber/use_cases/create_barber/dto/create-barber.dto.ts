@@ -13,9 +13,6 @@ export class CreateBarberDto {
   @IsPhoneNumber('BR')
   phone: string;
 
-  @IsString()
-  role: 'BARBER';
-
   @IsUUID()
   barbershop_id: string;
 }

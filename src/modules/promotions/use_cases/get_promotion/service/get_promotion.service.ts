@@ -19,7 +19,7 @@ export class PromotionGetService {
     user_id,
     promotion_id,
   }: IPromotionGetRequest): Promise<Promotion> {
-    const user_exists = await this.userRepository.findById(user_id);
+    const user_exists = await this.userRepository.findByIdSelectId(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const promotion_exists =
       await this.promotionRepository.findById(promotion_id);

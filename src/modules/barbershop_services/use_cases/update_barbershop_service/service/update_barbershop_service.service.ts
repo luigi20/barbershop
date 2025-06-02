@@ -28,17 +28,19 @@ export class BarbershopServiceUpdateService {
     price,
     duration,
   }: IBarbershopServiceUpdateRequest): Promise<Barbershop_Service> {
-    const user_exists = await this.userRepository.findById(user_id);
+    const user_exists = await this.userRepository.findByIdAndName(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const barbershop_exists =
-      await this.barbershopRepository.findById(barbershop_id);
+      await this.barbershopRepository.findByIdSelectIdAndNameAndOwnerId(
+        barbershop_id,
+      );
     if (!barbershop_exists) throw new AppError('Barbearia não existe', 404);
     if (barbershop_exists.owner_id !== user_id)
       throw new AppError('Somente o proprietário pode alterar informações');
-    const service = await this.serviceRepository.findById(service_id);
+    const service = await this.serviceRepository.findByIdSelectId(service_id);
     if (!service) throw new AppError('Serviço não cadastrado', 404);
     const barbershop_service_exists =
-      await this.barbershopServiceRepository.findByBarbershopIdAndServiceId(
+      await this.barbershopServiceRepository.findByBarbershopIdAndServiceIdBoolean(
         barbershop_id,
         service_id,
       );

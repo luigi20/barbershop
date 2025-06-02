@@ -17,9 +17,9 @@ export class PromotionDeleteService {
     user_id,
     id,
   }: IPromotionDeleteRequest): Promise<void> {
-    const user_exists = await this.userRepository.findById(user_id);
+    const user_exists = await this.userRepository.findByIdSelectId(user_id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
-    const promotion_exists = await this.promotionRepository.findById(id);
+    const promotion_exists = await this.promotionRepository.findBySelectId(id);
     if (!promotion_exists) throw new AppError('Promoção não existe');
     await this.promotionRepository.delete(id);
   }

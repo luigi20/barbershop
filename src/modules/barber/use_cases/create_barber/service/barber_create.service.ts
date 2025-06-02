@@ -11,7 +11,6 @@ interface IBarberCreateRequest {
   email: string;
   name: string;
   password: string;
-  role: string;
   phone: string;
   barbershop_id: string;
 }
@@ -26,14 +25,13 @@ export class BarberCreateService {
     email,
     name,
     password,
-    role,
     phone,
     barbershop_id,
   }: IBarberCreateRequest): Promise<User> {
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
     const barbershop_exists =
-      await this.barbershopRepository.findById(barbershop_id);
+      await this.barbershopRepository.findByIdSelectId(barbershop_id);
     if (!barbershop_exists) throw new AppError('Barbearia não existe', 404);
     const user_exists = await this.userRepository.findByEmail(email);
     if (user_exists) {
@@ -47,14 +45,14 @@ export class BarberCreateService {
         );
     }
     const list_users = ['BARBER'];
-    if (!list_users.includes(role))
+    if (!list_users.includes('BARBER'))
       throw new AppError('Papel não permitido no sistema');
     const user = new User({
       email: email,
       password: hash_password,
       name: name,
       phone: phone,
-      role: role,
+      role: 'BARBER',
       status: 'ativo',
     });
     await this.userRepository.create(user);

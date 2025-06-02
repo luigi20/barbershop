@@ -8,7 +8,7 @@ import { IPromotionRepository } from './abstract_class/IPromotionRepository';
 class PromotionRepository implements IPromotionRepository {
   constructor(private prisma: PrismaService) {}
   async findById(id: string): Promise<Promotion | null> {
-    const result = await this.prisma.promotion.findFirst({
+    const result = await this.prisma.promotions.findFirst({
       where: {
         id: id,
       },
@@ -16,8 +16,20 @@ class PromotionRepository implements IPromotionRepository {
     if (!result) return null;
     return PrismaPromotionMapper.toDomain(result);
   }
+  async findBySelectId(id: string): Promise<boolean | null> {
+    const result = await this.prisma.promotions.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (!result) return null;
+    return true;
+  }
   async findByBarbershopId(id: string): Promise<Promotion[]> {
-    const result = await this.prisma.promotion.findMany({
+    const result = await this.prisma.promotions.findMany({
       where: {
         barbershop_id: id,
       },
@@ -25,7 +37,7 @@ class PromotionRepository implements IPromotionRepository {
     return result.map((item) => PrismaPromotionMapper.toDomain(item));
   }
   async findByServiceId(id: string): Promise<Promotion[]> {
-    const result = await this.prisma.promotion.findMany({
+    const result = await this.prisma.promotions.findMany({
       where: {
         service_id: id,
       },
@@ -37,7 +49,7 @@ class PromotionRepository implements IPromotionRepository {
     barbershop_id: string,
     service_id: string,
   ): Promise<Promotion | null> {
-    const result = await this.prisma.promotion.findFirst({
+    const result = await this.prisma.promotions.findFirst({
       where: {
         service_id: service_id,
         barbershop_id: barbershop_id,
@@ -49,17 +61,17 @@ class PromotionRepository implements IPromotionRepository {
 
   async create(data: Promotion): Promise<void> {
     const raw = PrismaPromotionMapper.toPrisma(data);
-    await this.prisma.promotion.create({
+    await this.prisma.promotions.create({
       data: raw,
     });
   }
   async findByAll(): Promise<Promotion[]> {
-    const result = await this.prisma.promotion.findMany();
+    const result = await this.prisma.promotions.findMany();
     return result.map((item) => PrismaPromotionMapper.toDomain(item));
   }
   async update(data: Promotion): Promise<void> {
     const raw = PrismaPromotionMapper.toPrisma(data);
-    await this.prisma.promotion.update({
+    await this.prisma.promotions.update({
       where: {
         id: raw.id,
       },
@@ -67,7 +79,7 @@ class PromotionRepository implements IPromotionRepository {
     });
   }
   async delete(id: string): Promise<void> {
-    await this.prisma.promotion.delete({
+    await this.prisma.promotions.delete({
       where: {
         id: id,
       },

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IUserRepository } from '../abstract_class/IUserRepository';
 import { User } from '../../entities/user.entity';
+import { IdAndName } from '@utils/types';
 
 @Injectable()
 export class inMemoryUserRepository implements IUserRepository {
@@ -24,6 +25,23 @@ export class inMemoryUserRepository implements IUserRepository {
     const user = this.list_user.find((item) => item.id === id);
     if (!user) return null;
     return user;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async findByIdAndName(id: string): Promise<IdAndName | null> {
+    const user = this.list_user.find((item) => item.id === id);
+    if (!user) return null;
+    return {
+      id: user.id,
+      name: user.name,
+    };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async findByIdSelectId(id: string): Promise<string | null> {
+    const user = this.list_user.find((item) => item.id === id);
+    if (!user) return null;
+    return user.id;
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await

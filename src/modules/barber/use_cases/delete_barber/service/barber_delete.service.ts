@@ -5,7 +5,7 @@ import { AppError } from '@utils/apperror';
 export class BarberDeleteService {
   constructor(private readonly userRepository: IUserRepository) {}
   public async execute(id: string): Promise<void> {
-    const user_exists = await this.userRepository.findById(id);
+    const user_exists = await this.userRepository.findByIdSelectId(id);
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     await this.userRepository.delete(id);
   }

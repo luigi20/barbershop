@@ -9,6 +9,8 @@ export function makeBarbershopService(override: Override = {}) {
     barbershop_id: randomUUID(),
     service_id: randomUUID(),
     duration: 30,
+    barbershop_name: '',
+    service_name: '',
     price: 30.5,
     ...override,
   });

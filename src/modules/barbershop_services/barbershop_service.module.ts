@@ -9,14 +9,16 @@ import { BarbershopServiceCreateController } from './use_cases/create_barbershop
 import { BarbershopServiceCreateService } from './use_cases/create_barbershop_service/service/create_barbershop_service.service';
 import { BarbershopServiceDeleteController } from './use_cases/delete_barbershop_service/controller/barbershop_service_delete.controller';
 import { BarbershopServiceDeleteService } from './use_cases/delete_barbershop_service/service/delete_barbershop_service.service';
-import { BarbershopServiceGetController } from './use_cases/get_barbershop_service/controller/barbershop_service_get.controller';
-import { BarbershopServiceGetService } from './use_cases/get_barbershop_service/service/get_barbershop_service.service';
 import { BarbershopServiceUpdateController } from './use_cases/update_barbershop_service/controller/barbershop_update.controller';
 import { BarbershopServiceUpdateService } from './use_cases/update_barbershop_service/service/update_barbershop_service.service';
 import { IBarbershopServiceRepository } from './shared/repositories/abstract_class/IBarbershopServiceRepository';
 import { BarbershopServiceRepository } from './shared/repositories/BarbershopServiceRepository';
 import { IServiceRepository } from '@modules/services/shared/repositories/abstract_class/IServiceRepository';
 import { ServiceRepository } from '@modules/services/shared/repositories/ServiceRepository';
+import { BarbershopServiceGetController } from './use_cases/get_barbershop_service/controller/barbershop_service_get.controller';
+import { BarbershopServiceGetService } from './use_cases/get_barbershop_service/service/get_barbershop_service.service';
+import { BarbershopServiceGetAllController } from './use_cases/get_all_barbershop_service/controller/barbershop_service_get_all.controller';
+import { BarbershopServiceGetAllService } from './use_cases/get_all_barbershop_service/service/get_all_barbershop_service.service';
 
 @Module({
   controllers: [
@@ -24,12 +26,14 @@ import { ServiceRepository } from '@modules/services/shared/repositories/Service
     BarbershopServiceUpdateController,
     BarbershopServiceDeleteController,
     BarbershopServiceGetController,
+    BarbershopServiceGetAllController,
   ],
   providers: [
     BarbershopServiceCreateService,
     BarbershopServiceUpdateService,
     BarbershopServiceDeleteService,
     BarbershopServiceGetService,
+    BarbershopServiceGetAllService,
     {
       provide: IBarbershopRepository,
       useClass: BarbershopRepository,
