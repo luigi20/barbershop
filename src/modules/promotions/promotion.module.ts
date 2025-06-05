@@ -19,6 +19,8 @@ import { PromotionGetService } from './use_cases/get_promotion/service/get_promo
 import { PromotionUpdateController } from './use_cases/update_promotion/controller/promotion_update.controller';
 import { PromotionUpdateService } from './use_cases/update_promotion/service/update_promotion.service';
 import { PromotionRepository } from './shared/repositories/PromotionRepository';
+import { PromotionBarbershopGetAllController } from './use_cases/get_all_promotion_barbershop/controller/promotion_barbershop_get_all.controller';
+import { PromotionBarbershopGetAllService } from './use_cases/get_all_promotion_barbershop/service/get_all_promotion_barbershop.service';
 
 @Module({
   controllers: [
@@ -26,12 +28,14 @@ import { PromotionRepository } from './shared/repositories/PromotionRepository';
     PromotionUpdateController,
     PromotionDeleteController,
     PromotionGetController,
+    PromotionBarbershopGetAllController,
   ],
   providers: [
     PromotionCreateService,
     PromotionUpdateService,
     PromotionDeleteService,
     PromotionGetService,
+    PromotionBarbershopGetAllService,
     {
       provide: IBarbershopRepository,
       useClass: BarbershopRepository,

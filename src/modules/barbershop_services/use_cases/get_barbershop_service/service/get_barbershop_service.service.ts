@@ -48,7 +48,7 @@ export class BarbershopServiceGetService {
     if (match) {
       barbershop_service.service_name = match.name;
     }
-
+    barbershop_service.barbershop_name = barbershop_exists.name;
     return barbershop_service;
   }
 }

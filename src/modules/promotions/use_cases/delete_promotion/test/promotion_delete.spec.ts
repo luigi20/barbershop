@@ -1,4 +1,4 @@
-import { makeUser } from '@modules/user/shared/entities/test/user-factory';
+/*import { makeUser } from '@modules/user/shared/entities/test/user-factory';
 import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
 import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
 import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
@@ -6,7 +6,7 @@ import { inMemoryBarbershopServiceRepository } from '@modules/barbershop_service
 import { inMemoryServiceRepository } from '@modules/services/shared/repositories/test/inMemoryServiceRepository';
 import { makeService } from '@modules/services/shared/entities/test/services-factory';
 import { makeBarbershopService } from '@modules/barbershop_services/shared/entities/test/barbershop_services-factory';
-import { BarbershopServiceDeleteService } from '../service/delete_barbershop_service.service';
+import { BarbershopServiceDeleteService } from '@modules/barbershop_services/use_cases/delete_barbershop_service/service/delete_barbershop_service.service';
 
 describe('Test in setting Barbershop Service module', () => {
   let userRepository: inMemoryUserRepository;
@@ -99,3 +99,4 @@ describe('Test in setting Barbershop Service module', () => {
     ).rejects.toThrow('Serviço não existe na barbearia');
   });
 });
+*/

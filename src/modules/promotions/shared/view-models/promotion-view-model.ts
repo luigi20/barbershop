@@ -7,6 +7,8 @@ export class PromotionViewModel {
       id: promotion.id,
       barbershop_id: promotion.barbershop_id,
       service_id: promotion.service_id,
+      barbershop_name: promotion.barbershop_name,
+      service_name: promotion.service_name,
       discount_amount: promotion.discount_amount,
       status: promotion.status,
       created_at: promotion.created_at,

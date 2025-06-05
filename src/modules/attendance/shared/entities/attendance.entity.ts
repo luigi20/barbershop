@@ -1,32 +1,34 @@
-import { Barbershop_Service } from '@modules/barbershop_services/shared/entities/barbershop_services.entity';
+import { Barbershop } from '@modules/barbershop/shared/entities/barbershop.entity';
+import { User } from '@modules/user/shared/entities/user.entity';
 import { randomUUID } from 'crypto';
 import { Replace } from 'src/utils/replace';
 
-export interface Promotion_Props {
-  service_id: string;
+export interface Attendance_Props {
   barbershop_id: string;
-  service_name: string | null;
+  barber_attendance_id: string;
   barbershop_name: string | null;
-  discount_amount: number;
+  barber_attendance_name: string | null;
   status: string;
   created_at: Date;
   updated_at: Date;
-  barbershop_service: Barbershop_Service | null;
+  barbershop: Barbershop | null;
+  barber_attendance: User | null;
 }
 
-export class Promotion {
+export class Attendance {
   private _id: string;
-  private props: Promotion_Props;
+  private props: Attendance_Props;
 
   constructor(
     props: Replace<
-      Promotion_Props,
+      Attendance_Props,
       {
         created_at?: Date;
         updated_at?: Date;
-        service_name?: string | null;
+        barber_attendance?: User | null;
+        barbershop?: Barbershop | null;
         barbershop_name?: string | null;
-        barbershop_service?: Barbershop_Service | null;
+        barber_attendance_name?: string | null;
       }
     >,
     id?: string,
@@ -36,8 +38,9 @@ export class Promotion {
       ...props,
       created_at: props.created_at ?? new Date(),
       updated_at: props.updated_at ?? new Date(),
-      barbershop_service: props.barbershop_service ?? null,
-      service_name: props.service_name ?? null,
+      barber_attendance: props.barber_attendance ?? null,
+      barbershop: props.barbershop ?? null,
+      barber_attendance_name: props.barber_attendance_name ?? null,
       barbershop_name: props.barbershop_name ?? null,
     };
   }
@@ -46,12 +49,12 @@ export class Promotion {
     return this._id;
   }
 
-  public get service_id(): string {
-    return this.props.service_id;
+  public get barber_attendance_id(): string {
+    return this.props.barber_attendance_id;
   }
 
-  public set service_id(service_id: string) {
-    this.props.service_id = service_id;
+  public set barber_attendance_id(barber_attendance_id: string) {
+    this.props.barber_attendance_id = barber_attendance_id;
   }
 
   public get barbershop_id(): string {
@@ -62,12 +65,12 @@ export class Promotion {
     this.props.barbershop_id = barbershop_id;
   }
 
-  public get service_name(): string | null {
-    return this.props.service_name;
+  public get barber_attendance_name(): string | null {
+    return this.props.barber_attendance_name;
   }
 
-  public set service_name(service_name: string) {
-    this.props.service_name = service_name;
+  public set barber_attendance_name(barber_attendance_name: string) {
+    this.props.barber_attendance_name = barber_attendance_name;
   }
 
   public get barbershop_name(): string | null {
@@ -78,14 +81,6 @@ export class Promotion {
     this.props.barbershop_name = barbershop_name;
   }
 
-  public get discount_amount(): number {
-    return this.props.discount_amount;
-  }
-
-  public set discount_amount(discount_amount: number) {
-    this.props.discount_amount = discount_amount;
-  }
-
   public get status(): string {
     return this.props.status;
   }
@@ -94,6 +89,21 @@ export class Promotion {
     this.props.status = status;
   }
 
+  public get barber_attendance(): User | null {
+    return this.props.barber_attendance;
+  }
+
+  public set barber_attendance(barber_attendance: User) {
+    this.props.barber_attendance = barber_attendance;
+  }
+
+  public get barbershop(): Barbershop | null {
+    return this.props.barbershop;
+  }
+
+  public set barbershop(barbershop: Barbershop) {
+    this.props.barbershop = barbershop;
+  }
   public get created_at(): Date {
     return this.props.updated_at;
   }
@@ -108,13 +118,5 @@ export class Promotion {
 
   public set updated_at(updated_at: Date) {
     this.props.updated_at = updated_at;
-  }
-
-  public get barbershop_service(): Barbershop_Service | null {
-    return this.props.barbershop_service;
-  }
-
-  public set barbershop_service(barbershop_service: Barbershop_Service) {
-    this.props.barbershop_service = barbershop_service;
   }
 }

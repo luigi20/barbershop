@@ -6,7 +6,7 @@ import { PromotionGetService } from '../service/get_promotion.service';
 export class PromotionGetController {
   constructor(private readonly promotionGetService: PromotionGetService) {}
 
-  @Get(':id')
+  @Get('/get/:id')
   async get(@Param('id') id: string, user_id: string) {
     const result = await this.promotionGetService.execute({
       promotion_id: id,

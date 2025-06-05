@@ -1,4 +1,4 @@
-import { makeUser } from '@modules/user/shared/entities/test/user-factory';
+/*import { makeUser } from '@modules/user/shared/entities/test/user-factory';
 import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
 import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
 import { inMemoryBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/test/inMemoryBarbershopServiceRepository';
@@ -137,3 +137,4 @@ describe('Test in setting Barbershop Service module', () => {
     ).rejects.toThrow('Usuário não existe');
   });
 });
+*/

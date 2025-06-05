@@ -19,7 +19,7 @@ model Attendance {
   barbershop_id        String
   barber_attendance_id String
   barber_attendance    User                 @relation(fields: [barber_attendance_id], references: [id], onDelete: Cascade)
-  status               String               @db.VarChar()
+  status               Attendance_Status
   services             AttendanceServices[]
   created_at           DateTime
   updated_at           DateTime
@@ -98,6 +98,17 @@ model BarbershopService {
   @@map("barbershop_services")
 }
 
+model Services {
+  id                  String               @id
+  name                String               @db.VarChar()
+  created_at          DateTime
+  updated_at          DateTime
+  attendance_services AttendanceServices[]
+  BarbershopService   BarbershopService[]
+
+  @@map("services")
+}
+
 enum Status_Barbershop {
   ABERTA
   FECHADA
@@ -137,17 +148,6 @@ model Barbershop {
 
   @@index([owner_id])
   @@map("barbershops")
-}
-
-model Services {
-  id                  String               @id
-  name                String               @db.VarChar()
-  created_at          DateTime
-  updated_at          DateTime
-  attendance_services AttendanceServices[]
-  BarbershopService   BarbershopService[]
-
-  @@map("services")
 }
 
 model User {
