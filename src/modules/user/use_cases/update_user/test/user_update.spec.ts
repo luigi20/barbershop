@@ -15,10 +15,11 @@ describe('Test in setting user module', () => {
     const updated_user = await create_update_service.execute({
       email: 'teste2@gmail.com',
       name: 'Luis',
-      password: '123456',
+      password: '1234569',
       id: '123456',
       phone: '5511988275940',
       role: 'ADMIN',
+      status: 'ativo',
     });
     expect(userRepository.list_user[0]).toEqual(updated_user);
   });
@@ -33,6 +34,7 @@ describe('Test in setting user module', () => {
         role: 'MEMBER',
         phone: '5511988275940',
         id: '123456',
+        status: 'ativo',
       }),
     ).rejects.toThrow('Usuário não existe');
   });

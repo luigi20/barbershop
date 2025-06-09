@@ -18,7 +18,7 @@ describe('Test in setting client module', () => {
       password: '123456',
       id: '123456',
       phone: '5511988275940',
-      role: 'ADMIN',
+      status: 'ativo',
     });
     expect(userRepository.list_user[0]).toEqual(client_update);
   });
@@ -30,9 +30,9 @@ describe('Test in setting client module', () => {
         email: 'teste@gmail.com',
         name: 'Luis',
         password: '123456',
-        role: 'MEMBER',
         phone: '5511988275940',
         id: '123456',
+        status: 'ativo',
       }),
     ).rejects.toThrow('Usuário não existe');
   });

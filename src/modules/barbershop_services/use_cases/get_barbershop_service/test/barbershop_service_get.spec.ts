@@ -25,7 +25,8 @@ describe('Test in setting Barbershop module', () => {
     barbershopRepository.list_barbershop.push(makeBarbershop());
     barbershopServiceRepository.list_barbershop_service.push(
       makeBarbershopService({
-        barbershop_id: '123456',
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
       }),
     );
     const get_barbershop_service = new BarbershopServiceGetService(
@@ -35,11 +36,11 @@ describe('Test in setting Barbershop module', () => {
       serviceRepository,
     );
     const get_barbershop = await get_barbershop_service.execute({
-      barbershop_id: '123456',
-      user_id: '123456',
+      barbershop_id: barbershopRepository.list_barbershop[0].id,
+      user_id: userRepository.list_user[0].id,
       service_id: serviceRepository.list_service[0].id,
     });
-    expect(barbershopServiceRepository.list_barbershop_service).toEqual(
+    expect(barbershopServiceRepository.list_barbershop_service[0]).toEqual(
       get_barbershop,
     );
   });

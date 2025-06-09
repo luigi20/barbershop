@@ -28,14 +28,17 @@ export class ClientUpdateService {
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
-    const user = new User({
-      name: name,
-      password: hash_password,
-      email: email,
-      phone: phone,
-      role: 'CLIENT',
-      status: status,
-    });
+    const user = new User(
+      {
+        name: name,
+        password: hash_password,
+        email: email,
+        phone: phone,
+        role: 'CLIENT',
+        status: status,
+      },
+      user_exists,
+    );
     await this.userRepository.update(user);
     return user;
   }

@@ -39,38 +39,9 @@ describe('Test in setting barber module', () => {
       password: '123456',
       phone: '5511988275940',
       barbershop_id: barbershopRepository.list_barbershop[0].id,
-      role: 'BARBER',
     });
     expect(userRepository.list_user).toHaveLength(2);
     expect(userRepository.list_user[1]).toEqual(barber_user);
-  });
-
-  it('should add barber because role not exists', async () => {
-    userRepository.list_user.push(
-      makeUser({
-        role: 'ADMIN',
-      }),
-    );
-    barbershopRepository.list_barbershop.push(
-      makeBarbershop({
-        owner_id: userRepository.list_user[0].id,
-      }),
-    );
-    const barber_user_service = new BarberCreateService(
-      userRepository,
-      memberRepository,
-      barbershopRepository,
-    );
-    await expect(
-      barber_user_service.execute({
-        email: 'teste@gmail.com',
-        name: 'Luis',
-        password: '123456',
-        barbershop_id: '123456',
-        phone: '5511988275940',
-        role: 'CLIENT',
-      }),
-    ).rejects.toThrow('Papel não permitido no sistema');
   });
 
   it('should not add barber because barbershop not exists', async () => {
@@ -96,7 +67,6 @@ describe('Test in setting barber module', () => {
         password: '123456',
         barbershop_id: '123',
         phone: '5511988275940',
-        role: 'BARBER',
       }),
     ).rejects.toThrow('Barbearia não existe');
   });
@@ -131,45 +101,7 @@ describe('Test in setting barber module', () => {
         password: '123456',
         barbershop_id: '123456',
         phone: '5511988275940',
-        role: 'BARBER',
       }),
     ).rejects.toThrow('Barbeiro já cadastrado com este email nesta barbearia');
   });
-  /*
-  it('should not add barber because emails equals', async () => {
-    userRepository.list_user.push(makeUser());
-    const barber_user_service = new BarberCreateService(
-      userRepository,
-      memberRepository,
-      barbershopRepository,
-    );
-    await expect(
-      barber_user_service.execute({
-        email: 'teste@gmail.com',
-        name: 'Luis',
-        password: '123456',
-        barbershop_id: '123456',
-        phone: '5511988275940',
-        role: 'ADMIN',
-      }),
-    ).rejects.toThrow('Usuário já cadastrado com este email');
-  });
-
-  it('should not add barber because role not exists', async () => {
-    const barber_user_service = new BarberCreateService(
-      userRepository,
-      memberRepository,
-      barbershopRepository,
-    );
-    await expect(
-      barber_user_service.execute({
-        email: 'teste@gmail.com',
-        name: 'Luis',
-        password: '123456',
-        barbershop_id: '123456',
-        phone: '5511988275940',
-        role: 'MEMBER',
-      }),
-    ).rejects.toThrow('Papel de usuário não permitido no sistema');
-  });*/
 });

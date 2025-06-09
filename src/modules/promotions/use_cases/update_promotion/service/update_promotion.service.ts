@@ -42,7 +42,7 @@ export class PromotionUpdateService {
     if (barbershop_exists.owner_id !== user_id)
       throw new AppError('Somente o proprietário pode alterar informações');
     const service = await this.serviceRepository.findByIdSelectId(service_id);
-    if (!service) throw new AppError('Serviço não cadastrado', 404);
+    if (!service) throw new AppError('Serviço não existe', 404);
     const barbershop_service_exists =
       await this.barbershopServiceRepository.findByBarbershopIdAndServiceId(
         barbershop_id,
@@ -50,6 +50,8 @@ export class PromotionUpdateService {
       );
     if (!barbershop_service_exists)
       throw new AppError('Este serviço não existe na barbearia', 404);
+    const promotion_exists = await this.promotionRepository.findBySelectId(id);
+    if (!promotion_exists) throw new AppError('Promoção não existe', 404);
     const promotion = new Promotion(
       {
         barbershop_id: barbershop_id,

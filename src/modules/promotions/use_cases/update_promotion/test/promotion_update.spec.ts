@@ -1,26 +1,31 @@
-/*import { makeUser } from '@modules/user/shared/entities/test/user-factory';
-import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
+import { inMemoryPromotionRepository } from '@modules/promotions/shared/repositories/test/inMemoryPromotionRepository';
+import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
 import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
 import { inMemoryBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/test/inMemoryBarbershopServiceRepository';
-import { inMemoryServiceRepository } from '@modules/services/shared/repositories/test/inMemoryServiceRepository';
-import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
 import { makeService } from '@modules/services/shared/entities/test/services-factory';
-import { randomUUID } from 'crypto';
-import { BarbershopServiceUpdateService } from '../service/update_barbershop_service.service';
+import { inMemoryServiceRepository } from '@modules/services/shared/repositories/test/inMemoryServiceRepository';
+import { makeUser } from '@modules/user/shared/entities/test/user-factory';
+import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
 import { makeBarbershopService } from '@modules/barbershop_services/shared/entities/test/barbershop_services-factory';
+import { randomUUID } from 'crypto';
+import { PromotionUpdateService } from '../service/update_promotion.service';
+import { makePromotion } from '@modules/promotions/shared/entities/test/promotion-factory';
 
-describe('Test in setting Barbershop Service module', () => {
+describe('Test in setting Promotion module', () => {
   let userRepository: inMemoryUserRepository;
   let barbershopRepository: inMemoryBarbershopRepository;
   let serviceRepository: inMemoryServiceRepository;
   let barbershopServiceRepository: inMemoryBarbershopServiceRepository;
+  let promotionRepository: inMemoryPromotionRepository;
   beforeEach(() => {
     userRepository = new inMemoryUserRepository();
     barbershopRepository = new inMemoryBarbershopRepository();
     barbershopServiceRepository = new inMemoryBarbershopServiceRepository();
     serviceRepository = new inMemoryServiceRepository();
+    promotionRepository = new inMemoryPromotionRepository();
   });
-  it('should update Barbershop Service', async () => {
+
+  it('should add Promotion', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
     serviceRepository.list_service.push(makeService());
@@ -30,111 +35,242 @@ describe('Test in setting Barbershop Service module', () => {
         service_id: serviceRepository.list_service[0].id,
       }),
     );
-    const update_barbershop_service = new BarbershopServiceUpdateService(
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
       barbershopRepository,
       userRepository,
       serviceRepository,
       barbershopServiceRepository,
+      promotionRepository,
     );
-    const created_barbershop_service = await update_barbershop_service.execute({
+    await update_promotion_service.execute({
       barbershop_id: barbershopRepository.list_barbershop[0].id,
-      service_id: serviceRepository.list_service[0].id,
-      duration: 30,
-      price: 39.5,
       user_id: userRepository.list_user[0].id,
+      service_id: serviceRepository.list_service[0].id,
+      discount_amount: 40,
+      status: 'ativo',
+      id: '123456',
     });
-    expect(barbershopServiceRepository.list_barbershop_service).toHaveLength(1);
-    expect(barbershopServiceRepository.list_barbershop_service[0]).toEqual(
-      created_barbershop_service,
-    );
+    expect(promotionRepository.list_promotion[0].discount_amount).toEqual(40);
   });
 
-  it('should not add Barbershop Service, because barbershop not exists', async () => {
+  it('should not update promotion, because promotion not exists', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
     serviceRepository.list_service.push(makeService());
-    const update_barbershop_service = new BarbershopServiceUpdateService(
+    barbershopServiceRepository.list_barbershop_service.push(
+      makeBarbershopService({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
       barbershopRepository,
       userRepository,
       serviceRepository,
       barbershopServiceRepository,
+      promotionRepository,
     );
     await expect(
-      update_barbershop_service.execute({
-        barbershop_id: randomUUID(),
-        service_id: serviceRepository.list_service[0].id,
-        duration: 30,
-        price: 39.5,
+      update_promotion_service.execute({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
         user_id: userRepository.list_user[0].id,
+        service_id: serviceRepository.list_service[0].id,
+        discount_amount: 40,
+        status: 'ativo',
+        id: '1234569',
+      }),
+    ).rejects.toThrow('Promoção não existe');
+  });
+
+  it('should not update promotion, because service not exists', async () => {
+    userRepository.list_user.push(makeUser());
+    barbershopRepository.list_barbershop.push(makeBarbershop());
+    serviceRepository.list_service.push(makeService());
+    barbershopServiceRepository.list_barbershop_service.push(
+      makeBarbershopService({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
+      barbershopRepository,
+      userRepository,
+      serviceRepository,
+      barbershopServiceRepository,
+      promotionRepository,
+    );
+    await expect(
+      update_promotion_service.execute({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        user_id: userRepository.list_user[0].id,
+        service_id: randomUUID(),
+        discount_amount: 40,
+        status: 'ativo',
+        id: '123456',
+      }),
+    ).rejects.toThrow('Serviço não existe');
+  });
+
+  it('should not update promotion, because barbershop not exists', async () => {
+    userRepository.list_user.push(makeUser());
+    barbershopRepository.list_barbershop.push(makeBarbershop());
+    serviceRepository.list_service.push(makeService());
+    barbershopServiceRepository.list_barbershop_service.push(
+      makeBarbershopService({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
+      barbershopRepository,
+      userRepository,
+      serviceRepository,
+      barbershopServiceRepository,
+      promotionRepository,
+    );
+    await expect(
+      update_promotion_service.execute({
+        barbershop_id: randomUUID(),
+        user_id: userRepository.list_user[0].id,
+        service_id: serviceRepository.list_service[0].id,
+        discount_amount: 40,
+        status: 'ativo',
+        id: '123456',
       }),
     ).rejects.toThrow('Barbearia não existe');
   });
 
-  it('should not add Barbershop Service, because service not exists', async () => {
-    userRepository.list_user.push(makeUser());
-    barbershopRepository.list_barbershop.push(makeBarbershop());
-    serviceRepository.list_service.push(makeService());
-    const update_barbershop_service = new BarbershopServiceUpdateService(
-      barbershopRepository,
-      userRepository,
-      serviceRepository,
-      barbershopServiceRepository,
-    );
-    await expect(
-      update_barbershop_service.execute({
-        barbershop_id: barbershopRepository.list_barbershop[0].id,
-        service_id: randomUUID(),
-        duration: 30,
-        price: 39.5,
-        user_id: userRepository.list_user[0].id,
-      }),
-    ).rejects.toThrow('Serviço não cadastrado');
-  });
-
-  it('should not add Barbershop Service, because request not owner', async () => {
+  it('should not update promotion, because is not owner', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(
       makeBarbershop({
-        owner_id: randomUUID(),
+        owner_id: '1',
       }),
     );
     serviceRepository.list_service.push(makeService());
-    const update_barbershop_service = new BarbershopServiceUpdateService(
+    barbershopServiceRepository.list_barbershop_service.push(
+      makeBarbershopService({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
       barbershopRepository,
       userRepository,
       serviceRepository,
       barbershopServiceRepository,
+      promotionRepository,
     );
     await expect(
-      update_barbershop_service.execute({
+      update_promotion_service.execute({
         barbershop_id: barbershopRepository.list_barbershop[0].id,
-        service_id: serviceRepository.list_service[0].id,
-        duration: 30,
-        price: 39.5,
         user_id: userRepository.list_user[0].id,
+        service_id: serviceRepository.list_service[0].id,
+        discount_amount: 40,
+        status: 'ativo',
+        id: '123456',
       }),
     ).rejects.toThrow('Somente o proprietário pode alterar informações');
   });
 
-  it('should not add Barbershop Service, because user not exists', async () => {
+  it('should not update promotion, because user not exists', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
     serviceRepository.list_service.push(makeService());
-    const update_barbershop_service = new BarbershopServiceUpdateService(
+    barbershopServiceRepository.list_barbershop_service.push(
+      makeBarbershopService({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
       barbershopRepository,
       userRepository,
       serviceRepository,
       barbershopServiceRepository,
+      promotionRepository,
     );
     await expect(
-      update_barbershop_service.execute({
+      update_promotion_service.execute({
         barbershop_id: barbershopRepository.list_barbershop[0].id,
-        service_id: serviceRepository.list_service[0].id,
-        duration: 30,
-        price: 39.5,
         user_id: randomUUID(),
+        service_id: serviceRepository.list_service[0].id,
+        discount_amount: 40,
+        status: 'ativo',
+        id: '123456',
       }),
     ).rejects.toThrow('Usuário não existe');
   });
+
+  it('should not update promotion, because service not exists in barbershop', async () => {
+    userRepository.list_user.push(makeUser());
+    barbershopRepository.list_barbershop.push(makeBarbershop());
+    serviceRepository.list_service.push(makeService());
+    serviceRepository.list_service.push(makeService({}, '454543'));
+    barbershopServiceRepository.list_barbershop_service.push(
+      makeBarbershopService({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        service_id: serviceRepository.list_service[0].id,
+      }),
+    );
+    const update_promotion_service = new PromotionUpdateService(
+      barbershopRepository,
+      userRepository,
+      serviceRepository,
+      barbershopServiceRepository,
+      promotionRepository,
+    );
+    await expect(
+      update_promotion_service.execute({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+        user_id: userRepository.list_user[0].id,
+        service_id: serviceRepository.list_service[1].id,
+        discount_amount: 40,
+        status: 'ativo',
+        id: '123456',
+      }),
+    ).rejects.toThrow('Este serviço não existe na barbearia');
+  });
 });
-*/

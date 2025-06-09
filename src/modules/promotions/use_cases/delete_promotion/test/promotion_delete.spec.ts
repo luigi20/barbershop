@@ -1,67 +1,63 @@
-/*import { makeUser } from '@modules/user/shared/entities/test/user-factory';
+import { makeUser } from '@modules/user/shared/entities/test/user-factory';
 import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
-import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
-import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
-import { inMemoryBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/test/inMemoryBarbershopServiceRepository';
-import { inMemoryServiceRepository } from '@modules/services/shared/repositories/test/inMemoryServiceRepository';
-import { makeService } from '@modules/services/shared/entities/test/services-factory';
-import { makeBarbershopService } from '@modules/barbershop_services/shared/entities/test/barbershop_services-factory';
-import { BarbershopServiceDeleteService } from '@modules/barbershop_services/use_cases/delete_barbershop_service/service/delete_barbershop_service.service';
+import { inMemoryPromotionRepository } from '@modules/promotions/shared/repositories/test/inMemoryPromotionRepository';
+import { PromotionDeleteService } from '../service/delete_promotion.service';
+import { makePromotion } from '@modules/promotions/shared/entities/test/promotion-factory';
 
-describe('Test in setting Barbershop Service module', () => {
+describe('Test in setting Promotion module', () => {
   let userRepository: inMemoryUserRepository;
-  let barbershopRepository: inMemoryBarbershopRepository;
-  let serviceRepository: inMemoryServiceRepository;
-  let barbershopServiceRepository: inMemoryBarbershopServiceRepository;
+  let promotionRepository: inMemoryPromotionRepository;
   beforeEach(() => {
     userRepository = new inMemoryUserRepository();
-    barbershopRepository = new inMemoryBarbershopRepository();
-    barbershopServiceRepository = new inMemoryBarbershopServiceRepository();
-    serviceRepository = new inMemoryServiceRepository();
+    promotionRepository = new inMemoryPromotionRepository();
   });
-  it('should delete Barbershop Service', async () => {
+  it('should delete Promotion', async () => {
     userRepository.list_user.push(makeUser());
-    barbershopRepository.list_barbershop.push(makeBarbershop());
-    serviceRepository.list_service.push(makeService());
-    barbershopServiceRepository.list_barbershop_service.push(
-      makeBarbershopService({
-        barbershop_id: barbershopRepository.list_barbershop[0].id,
-        service_id: serviceRepository.list_service[0].id,
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: '123456',
+        service_id: '123456',
       }),
     );
-    const delete_barbershop_service = new BarbershopServiceDeleteService(
-      barbershopRepository,
+    const delete_promotion_service = new PromotionDeleteService(
       userRepository,
-      barbershopServiceRepository,
-      serviceRepository,
+      promotionRepository,
     );
-    await delete_barbershop_service.execute({
-      barbershop_id: '123456',
+    await delete_promotion_service.execute({
       user_id: '123456',
-      service_id: '123456',
+      id: '123456',
     });
-    expect(barbershopServiceRepository.list_barbershop_service.length).toEqual(
-      0,
-    );
+    expect(promotionRepository.list_promotion.length).toEqual(0);
   });
-  it('should not delete Barbershop because user not exists', async () => {
+
+  it('should not delete Promotion because user not exists', async () => {
     userRepository.list_user.push(makeUser());
-    barbershopRepository.list_barbershop.push(makeBarbershop());
-    const delete_barbershop_service = new BarbershopServiceDeleteService(
-      barbershopRepository,
+    const delete_promotion_service = new PromotionDeleteService(
       userRepository,
-      barbershopServiceRepository,
-      serviceRepository,
+      promotionRepository,
     );
     await expect(
-      delete_barbershop_service.execute({
-        barbershop_id: '123456',
+      delete_promotion_service.execute({
         user_id: '1234567',
-        service_id: '123456',
+        id: '123456',
       }),
     ).rejects.toThrow('Usuário não existe');
   });
 
+  it('should not delete Promotion because promotion not exists', async () => {
+    userRepository.list_user.push(makeUser());
+    const delete_promotion_service = new PromotionDeleteService(
+      userRepository,
+      promotionRepository,
+    );
+    await expect(
+      delete_promotion_service.execute({
+        user_id: '123456',
+        id: '1234569',
+      }),
+    ).rejects.toThrow('Promoção não existe');
+  });
+  /*
   it('should not delete Barbershop Service because barbershop not exists', async () => {
     userRepository.list_user.push(makeUser());
     barbershopRepository.list_barbershop.push(makeBarbershop());
@@ -97,6 +93,5 @@ describe('Test in setting Barbershop Service module', () => {
         service_id: '1234569',
       }),
     ).rejects.toThrow('Serviço não existe na barbearia');
-  });
+  });*/
 });
-*/

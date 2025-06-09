@@ -30,14 +30,17 @@ export class UserUpdateService {
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
-    const user = new User({
-      email: email,
-      password: hash_password,
-      name: name,
-      phone: phone,
-      role: role,
-      status: status,
-    });
+    const user = new User(
+      {
+        email: email,
+        password: hash_password,
+        name: name,
+        phone: phone,
+        role: role,
+        status: status,
+      },
+      user_exists,
+    );
     await this.userRepository.update(user);
     return user;
   }

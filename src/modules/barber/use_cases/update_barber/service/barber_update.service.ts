@@ -27,14 +27,17 @@ export class BarberUpdateService {
     if (!user_exists) throw new AppError('Usuário não existe', 404);
     const saltRounds = 12;
     const hash_password = await bcrypt.hash(password, saltRounds);
-    const user = new User({
-      email: email,
-      password: hash_password,
-      name: name,
-      phone: phone,
-      role: 'BARBER',
-      status: 'ativo',
-    });
+    const user = new User(
+      {
+        email: email,
+        password: hash_password,
+        name: name,
+        phone: phone,
+        role: 'BARBER',
+        status: 'ativo',
+      },
+      user_exists,
+    );
     await this.userRepository.update(user);
     return user;
   }

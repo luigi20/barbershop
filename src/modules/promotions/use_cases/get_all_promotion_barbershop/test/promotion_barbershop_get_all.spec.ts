@@ -1,83 +1,137 @@
-/*import { makeUser } from '@modules/user/shared/entities/test/user-factory';
+import { makeUser } from '@modules/user/shared/entities/test/user-factory';
 import { inMemoryUserRepository } from '@modules/user/shared/repositories/test/inMemoryUserRepository';
+import { inMemoryPromotionRepository } from '@modules/promotions/shared/repositories/test/inMemoryPromotionRepository';
+import { makePromotion } from '@modules/promotions/shared/entities/test/promotion-factory';
+import { PromotionBarbershopGetAllService } from '../service/get_all_promotion_barbershop.service';
 import { inMemoryBarbershopRepository } from '@modules/barbershop/shared/repositories/test/inMemoryBarbershopRepository';
 import { makeBarbershop } from '@modules/barbershop/shared/entities/test/barbershop-factory';
-import { inMemoryBarbershopServiceRepository } from '@modules/barbershop_services/shared/repositories/test/inMemoryBarbershopServiceRepository';
-import { makeBarbershopService } from '@modules/barbershop_services/shared/entities/test/barbershop_services-factory';
-import { BarbershopServiceGetService } from '@modules/barbershop_services/use_cases/get_barbershop_service/service/get_barbershop_service.service';
 
-describe('Test in setting Barbershop module', () => {
+describe('Test in setting Promotion list barbershop module', () => {
   let userRepository: inMemoryUserRepository;
   let barbershopRepository: inMemoryBarbershopRepository;
-  let barbershopServiceRepository: inMemoryBarbershopServiceRepository;
+  let promotionRepository: inMemoryPromotionRepository;
 
   beforeEach(() => {
     userRepository = new inMemoryUserRepository();
     barbershopRepository = new inMemoryBarbershopRepository();
-    barbershopServiceRepository = new inMemoryBarbershopServiceRepository();
+    promotionRepository = new inMemoryPromotionRepository();
   });
-  it('should get Barbershop Service list', async () => {
+  it('should get Promotion list barbershop', async () => {
     userRepository.list_user.push(makeUser());
-    barbershopRepository.list_barbershop.push(makeBarbershop());
-    barbershopServiceRepository.list_barbershop_service.push(
-      makeBarbershopService({
-        barbershop_id: '123456',
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
       }),
     );
-    const get_barbershop_service = new BarbershopServiceGetService(
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    const get_promotion_service = new PromotionBarbershopGetAllService(
       userRepository,
-      barbershopServiceRepository,
       barbershopRepository,
+      promotionRepository,
     );
-    const get_barbershop = await get_barbershop_service.execute({
-      barbershop_id: '123456',
+    const get_promotion = await get_promotion_service.execute({
       user_id: '123456',
+      barbershop_id: '123456',
     });
-    expect(barbershopServiceRepository.list_barbershop_service).toEqual(
-      get_barbershop,
-    );
+    expect(get_promotion.length).toEqual(4);
   });
 
-  it('should not get Barbershop Service list, because user not exists', async () => {
+  it('should not get Promotion list, because user not exists', async () => {
     userRepository.list_user.push(makeUser());
-    barbershopRepository.list_barbershop.push(makeBarbershop());
-    barbershopServiceRepository.list_barbershop_service.push(
-      makeBarbershopService({
-        barbershop_id: '123456',
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
       }),
     );
-    const get_barbershop_service = new BarbershopServiceGetService(
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    const get_promotion_service = new PromotionBarbershopGetAllService(
       userRepository,
-      barbershopServiceRepository,
       barbershopRepository,
+      promotionRepository,
     );
     await expect(
-      get_barbershop_service.execute({
-        barbershop_id: '123456',
+      get_promotion_service.execute({
         user_id: '1234568',
+        barbershop_id: '123456',
       }),
     ).rejects.toThrow('Usuário não existe');
   });
 
-  it('should not get Barbershop Service list, because narbershop service not exists', async () => {
+  it('should not get Promotion list, because barbershop not exists', async () => {
     userRepository.list_user.push(makeUser());
-    barbershopRepository.list_barbershop.push(makeBarbershop());
-    barbershopServiceRepository.list_barbershop_service.push(
-      makeBarbershopService({
-        barbershop_id: '123456',
+    barbershopRepository.list_barbershop.push(
+      makeBarbershop({
+        owner_id: userRepository.list_user[0].id,
       }),
     );
-    const get_barbershop_service = new BarbershopServiceGetService(
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    promotionRepository.list_promotion.push(
+      makePromotion({
+        barbershop_id: barbershopRepository.list_barbershop[0].id,
+      }),
+    );
+    const get_promotion_service = new PromotionBarbershopGetAllService(
       userRepository,
-      barbershopServiceRepository,
       barbershopRepository,
+      promotionRepository,
     );
     await expect(
-      get_barbershop_service.execute({
-        barbershop_id: '1234560',
+      get_promotion_service.execute({
         user_id: '123456',
+        barbershop_id: '1456',
       }),
     ).rejects.toThrow('Barbearia não existe');
   });
 });
-*/
