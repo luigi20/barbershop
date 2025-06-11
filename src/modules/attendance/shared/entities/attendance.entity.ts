@@ -14,7 +14,7 @@ export interface Attendance_Props {
   updated_at: Date;
   barbershop: Barbershop | null;
   barber_attendance: User | null;
-  services_uses_attendance?: Attendance_Service[] | null;
+  services_uses_attendance: Attendance_Service[] | null;
 }
 
 export class Attendance {
@@ -101,6 +101,16 @@ export class Attendance {
     this.props.barber_attendance = barber_attendance;
   }
 
+  public get services_uses_attendance(): Attendance_Service[] | null {
+    return this.props.services_uses_attendance;
+  }
+
+  public set services_uses_attendance(
+    services_uses_attendance: Attendance_Service[],
+  ) {
+    this.props.services_uses_attendance = services_uses_attendance;
+  }
+
   public get barbershop(): Barbershop | null {
     return this.props.barbershop;
   }
@@ -108,6 +118,7 @@ export class Attendance {
   public set barbershop(barbershop: Barbershop) {
     this.props.barbershop = barbershop;
   }
+
   public get created_at(): Date {
     return this.props.updated_at;
   }

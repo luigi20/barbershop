@@ -10,6 +10,7 @@ abstract class IServiceRepository {
   abstract update(data: Service): Promise<void>;
   abstract delete(id: string): Promise<void>;
   abstract findByIdSelectId(id: string): Promise<string | null>;
+  abstract findByIdsNames(ids: string[]): Promise<string[]>;
 }
 
 export { IServiceRepository };

@@ -3,6 +3,7 @@ import { PrismaService } from '@modules/prisma/service/prisma.service';
 import { IBarbershopServiceRepository } from './abstract_class/IBarbershopServiceRepository';
 import { PrismaBarbershopServiceMapper } from '@modules/prisma/mappers/PrismaBarbershopServiceMapper';
 import { Barbershop_Service } from '../entities/barbershop_services.entity';
+import { InfoService } from '@utils/types';
 
 @Injectable()
 class BarbershopServiceRepository implements IBarbershopServiceRepository {
@@ -15,6 +16,21 @@ class BarbershopServiceRepository implements IBarbershopServiceRepository {
     });
     return result.map((item) => PrismaBarbershopServiceMapper.toDomain(item));
   }
+
+  async findByListBarbershopIdAndServiceIdBoolean(
+    barbershop_id: string,
+    service_ids: string[],
+  ): Promise<boolean> {
+    const count = await this.prisma.barbershopService.count({
+      where: {
+        barbershop_id,
+        service_id: { in: service_ids },
+      },
+    });
+    // Verifica se todos os IDs existem
+    return count === service_ids.length;
+  }
+
   async findByServiceId(id: string): Promise<Barbershop_Service[]> {
     const result = await this.prisma.barbershopService.findMany({
       where: {
@@ -22,6 +38,26 @@ class BarbershopServiceRepository implements IBarbershopServiceRepository {
       },
     });
     return result.map((item) => PrismaBarbershopServiceMapper.toDomain(item));
+  }
+
+  async findByServiceIdsPrices(
+    ids: string[],
+    barbershop_id: string,
+  ): Promise<InfoService[]> {
+    const result = await this.prisma.barbershopService.findMany({
+      where: {
+        service_id: {
+          in: ids,
+        },
+        barbershop_id: barbershop_id,
+      },
+      select: {
+        price: true,
+        duration: true,
+        service_id: true,
+      },
+    });
+    return result.map((item) => item);
   }
 
   async findByBarbershopIdAndServiceId(

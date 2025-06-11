@@ -76,7 +76,7 @@ declare module '@prisma/client' {
     service_id: string;
     created_at: Date;
     updated_at: Date;
-    service_barbershop?: BarbershopServiceRelations;
+    services_attendance?: BarbershopServiceRelations[];
     attendance?: AttendanceRelations;
   }
 

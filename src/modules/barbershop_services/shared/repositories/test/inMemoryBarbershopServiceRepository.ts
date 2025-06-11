@@ -2,11 +2,22 @@
 import { Injectable } from '@nestjs/common';
 import { Barbershop_Service } from '../../entities/barbershop_services.entity';
 import { IBarbershopServiceRepository } from '../abstract_class/IBarbershopServiceRepository';
+import { InfoService } from '@utils/types';
 
 @Injectable()
 export class inMemoryBarbershopServiceRepository
   implements IBarbershopServiceRepository
 {
+  async findByServiceIdsPrices(
+    ids: string[],
+    barbershop_id: string,
+  ): Promise<InfoService[]> {
+    const list_barbershop_service = this.list_barbershop_service.filter(
+      (item) =>
+        item.barbershop_id === barbershop_id && ids.includes(item.service_id),
+    );
+    return list_barbershop_service;
+  }
   async findByBarbershopIdAndServiceIdBoolean(
     barbershop_id: string,
     service_id: string,
@@ -18,6 +29,19 @@ export class inMemoryBarbershopServiceRepository
     if (!barbershop_service) return null;
     return true;
   }
+
+  async findByListBarbershopIdAndServiceIdBoolean(
+    barbershop_id: string,
+    service_ids: string[],
+  ): Promise<boolean> {
+    const barbershop_service = this.list_barbershop_service.filter(
+      (item) =>
+        item.barbershop_id === barbershop_id &&
+        service_ids.includes(item.service_id),
+    );
+    return barbershop_service.length === service_ids.length;
+  }
+
   async findByBarbershopIdAndServiceId(
     barbershop_id: string,
     service_id: string,

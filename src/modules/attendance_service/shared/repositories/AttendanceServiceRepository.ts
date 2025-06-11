@@ -8,9 +8,11 @@ import { Attendance_Service } from '../entities/attendance_service.entity';
 class AttendanceServiceRepository implements IAttendanceServiceRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: Attendance_Service): Promise<void> {
-    const raw = PrismaAttendanceServiceMapper.toPrisma(data);
-    await this.prisma.attendanceServices.create({
+  async createMany(data: Attendance_Service[]): Promise<void> {
+    const raw = data.map((item) =>
+      PrismaAttendanceServiceMapper.toPrisma(item),
+    );
+    await this.prisma.attendanceServices.createMany({
       data: raw,
     });
   }

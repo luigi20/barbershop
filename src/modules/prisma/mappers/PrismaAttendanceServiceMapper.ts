@@ -20,17 +20,18 @@ export class PrismaAttendanceServiceMapper {
       barbershop_id: raw.barbershop_id,
       attendance_id: raw.attendance_id,
       service_name: null,
-      barber_attendance_name: null,
-      barbershop_name: null,
       service_id: raw.service_id,
       created_at: raw.created_at,
       updated_at: raw.updated_at,
       attendance: raw.attendance
         ? PrismaAttendanceMapper.toDomain(raw.attendance)
         : null,
-      service_barbershop: raw.service_barbershop
-        ? PrismaBarbershopServiceMapper.toDomain(raw.service_barbershop)
-        : null,
+      services_attendance:
+        raw.services_attendance && raw.services_attendance.length
+          ? raw.services_attendance.map((item) =>
+              PrismaBarbershopServiceMapper.toDomain(item),
+            )
+          : null,
     });
   }
 }

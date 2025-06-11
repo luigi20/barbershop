@@ -5,6 +5,7 @@ export interface Barbershop_Service_Props {
   barbershop_id: string;
   service_name: string | null;
   barbershop_name: string | null;
+  discount: number | null;
   duration: number;
   price: number;
   created_at: Date;
@@ -22,6 +23,7 @@ export class Barbershop_Service {
         updated_at?: Date;
         service_name?: string | null;
         barbershop_name?: string | null;
+        discount?: number | null;
       }
     >,
   ) {
@@ -31,7 +33,16 @@ export class Barbershop_Service {
       updated_at: props.updated_at ?? new Date(),
       service_name: props.service_name ?? null,
       barbershop_name: props.barbershop_name ?? null,
+      discount: props.discount ?? null,
     };
+  }
+
+  public get discount(): number | null {
+    return this.props.discount;
+  }
+
+  public set discount(discount: number) {
+    this.props.discount = discount;
   }
 
   public get service_id(): string {

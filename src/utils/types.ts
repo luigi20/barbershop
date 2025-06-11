@@ -8,3 +8,9 @@ export type IdAndNameAndOwnerBarbershop = {
   name: string;
   owner_id: string;
 };
+
+export type InfoService = {
+  duration: number;
+  price: number;
+  service_id: string;
+};

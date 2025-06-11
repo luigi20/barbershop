@@ -9,13 +9,13 @@ export interface Attendance_Service_Props {
   barbershop_id: string;
   attendance_id: string;
   service_id: string;
-  barbershop_name: string | null;
-  barber_attendance_name: string | null;
   service_name: string | null;
-  price: string | null;
+  price: number | null;
+  discount: number | null;
+  duration: number | null;
   created_at: Date;
   updated_at: Date;
-  service_barbershop: Barbershop_Service | null;
+  services_attendance: Barbershop_Service[] | null;
   attendance: Attendance | null;
 }
 
@@ -31,12 +31,12 @@ export class Attendance_Service {
         updated_at?: Date;
         barber_attendance?: User | null;
         barbershop?: Barbershop | null;
-        barbershop_name?: string | null;
-        service_barbershop?: Barbershop_Service | null;
+        services_attendance?: Barbershop_Service[] | null;
         service_name?: string | null;
         attendance?: Attendance | null;
-        price?: string | null;
-        barber_attendance_name?: string | null;
+        price?: number | null;
+        duration?: number | null;
+        discount?: number | null;
       }
     >,
     id?: string,
@@ -47,14 +47,21 @@ export class Attendance_Service {
       created_at: props.created_at ?? new Date(),
       updated_at: props.updated_at ?? new Date(),
       price: props.price ?? null,
-      barber_attendance_name: props.barber_attendance_name ?? null,
+      duration: props.duration ?? null,
       service_name: props.service_name ?? null,
-      service_barbershop: props.service_barbershop ?? null,
-      barbershop_name: props.barbershop_name ?? null,
+      services_attendance: props.services_attendance ?? null,
       attendance: props.attendance ?? null,
+      discount: props.discount ?? null,
     };
   }
 
+  public get discount(): number | null {
+    return this.props.discount;
+  }
+
+  public set discount(discount: number) {
+    this.props.discount = discount;
+  }
   public get id() {
     return this._id;
   }
@@ -91,22 +98,6 @@ export class Attendance_Service {
     this.props.attendance = attendance;
   }
 
-  public get barber_attendance_name(): string | null {
-    return this.props.barber_attendance_name;
-  }
-
-  public set barber_attendance_name(barber_attendance_name: string) {
-    this.props.barber_attendance_name = barber_attendance_name;
-  }
-
-  public get barbershop_name(): string | null {
-    return this.props.barbershop_name;
-  }
-
-  public set barbershop_name(barbershop_name: string) {
-    this.props.barbershop_name = barbershop_name;
-  }
-
   public get service_name(): string | null {
     return this.props.service_name;
   }
@@ -115,20 +106,28 @@ export class Attendance_Service {
     this.props.service_name = service_name;
   }
 
-  public get price(): string | null {
+  public get price(): number | null {
     return this.props.price;
   }
 
-  public set price(price: string) {
+  public set price(price: number) {
     this.props.price = price;
   }
 
-  public get service_barbershop(): Barbershop_Service | null {
-    return this.props.service_barbershop;
+  public get duration(): number | null {
+    return this.props.duration;
   }
 
-  public set service_barbershop(service_barbershop: Barbershop_Service) {
-    this.props.service_barbershop = service_barbershop;
+  public set duration(duration: number) {
+    this.props.duration = duration;
+  }
+
+  public get services_attendance(): Barbershop_Service[] | null {
+    return this.props.services_attendance;
+  }
+
+  public set services_attendance(services_attendance: Barbershop_Service[]) {
+    this.props.services_attendance = services_attendance;
   }
   public get created_at(): Date {
     return this.props.updated_at;

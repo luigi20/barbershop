@@ -13,8 +13,8 @@ export class inMemoryAttendanceServiceRepository
     return this.list_attendance_service;
   }
 
-  async create(data: Attendance_Service): Promise<void> {
-    this.list_attendance_service.push(data);
+  async createMany(data: Attendance_Service[]): Promise<void> {
+    this.list_attendance_service = [...this.list_attendance_service, ...data];
   }
 
   async findById(attendance_id: string): Promise<Attendance_Service[]> {

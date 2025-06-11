@@ -6,6 +6,11 @@ import { IdAndName } from '@utils/types';
 
 @Injectable()
 export class inMemoryServiceRepository implements IServiceRepository {
+  async findByIdsNames(ids: string[]): Promise<string[]> {
+    const services = this.list_service.filter((item) => ids.includes(item.id));
+    return services.map((service) => service.name);
+  }
+
   async findByIdGetAllAndName(): Promise<IdAndName[]> {
     const services = this.list_service.map((item) => {
       return {

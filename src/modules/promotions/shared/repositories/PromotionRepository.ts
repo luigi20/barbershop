@@ -59,6 +59,19 @@ class PromotionRepository implements IPromotionRepository {
     return PrismaPromotionMapper.toDomain(result);
   }
 
+  async findByListBarbershopIdAndListPromotion(
+    list_promotion: string[],
+  ): Promise<Promotion[]> {
+    const result = await this.prisma.promotions.findMany({
+      where: {
+        id: {
+          in: list_promotion,
+        },
+      },
+    });
+    return result.map((item) => PrismaPromotionMapper.toDomain(item));
+  }
+
   async create(data: Promotion): Promise<void> {
     const raw = PrismaPromotionMapper.toPrisma(data);
     await this.prisma.promotions.create({

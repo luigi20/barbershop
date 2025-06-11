@@ -7,8 +7,6 @@ export class AttendanceServiceViewModel {
       attendance_id: attendance_service.attendance_id,
       barbershop_id: attendance_service.barbershop_id,
       service_id: attendance_service.service_id,
-      barbershop_name: attendance_service.barbershop_name,
-      barber_attendance_name: attendance_service.barber_attendance_name,
       service_name: attendance_service.service_name,
       price: attendance_service.price,
     };

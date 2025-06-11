@@ -25,6 +25,20 @@ class ServiceRepository implements IServiceRepository {
     return PrismaServiceMapper.toDomain(result);
   }
 
+  async findByIdsNames(ids: string[]): Promise<string[]> {
+    const result_list = await this.prisma.services.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      select: {
+        name: true,
+      },
+    });
+    return result_list.map((item) => item.name);
+  }
+
   async findByIdAndName(id: string): Promise<IdAndName | null> {
     const result = await this.prisma.barbershop.findFirst({
       where: {
