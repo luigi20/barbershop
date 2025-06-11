@@ -65,8 +65,19 @@ declare module '@prisma/client' {
     status: Attendance_Status;
     created_at: Date;
     updated_at: Date;
+    services_uses_attendance?: AttendanceServicesRelations[];
     barber_attendance?: UserRelations;
     barbershop?: BarbershopRelations;
+  }
+
+  export interface AttendanceServiceRelations {
+    attendance_id: string;
+    barbershop_id: string;
+    service_id: string;
+    created_at: Date;
+    updated_at: Date;
+    service_barbershop?: BarbershopServiceRelations;
+    attendance?: AttendanceRelations;
   }
 
   export interface BarbershopServiceRelations {

@@ -5,6 +5,7 @@ import {
 import { PrismaUserMapper } from './PrismaUserMapper';
 import { Attendance } from '@modules/attendance/shared/entities/attendance.entity';
 import { PrismaBarbershopMapper } from './PrismaBarbershopMapper';
+import { PrismaAttendanceServiceMapper } from './PrismaAttendanceServiceMapper';
 
 export class PrismaAttendanceMapper {
   static toPrisma(attendance: Attendance) {
@@ -32,6 +33,13 @@ export class PrismaAttendanceMapper {
         barbershop: raw.barbershop
           ? PrismaBarbershopMapper.toDomain(raw.barbershop)
           : null,
+        services_uses_attendance:
+          raw.services_uses_attendance &&
+          raw.services_uses_attendance.length > 0
+            ? raw.services_uses_attendance.map((item) =>
+                PrismaAttendanceServiceMapper.toDomain(item),
+              )
+            : [],
       },
       raw.id,
     );

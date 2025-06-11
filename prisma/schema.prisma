@@ -14,16 +14,16 @@ datasource db {
 }
 
 model Attendance {
-  id                   String               @id
-  barbershop           Barbershop           @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
-  barbershop_id        String
-  barber_attendance_id String
-  barber_attendance    User                 @relation(fields: [barber_attendance_id], references: [id], onDelete: Cascade)
-  status               Attendance_Status
-  services             AttendanceServices[]
-  created_at           DateTime
-  updated_at           DateTime
-  Schedule             Schedule?
+  id                       String               @id
+  barbershop               Barbershop           @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
+  barbershop_id            String
+  barber_attendance_id     String
+  barber_attendance        User                 @relation(fields: [barber_attendance_id], references: [id], onDelete: Cascade)
+  status                   Attendance_Status
+  services_uses_attendance AttendanceServices[]
+  created_at               DateTime
+  updated_at               DateTime
+  schedule                 Schedule?
 
   @@index([barbershop_id])
   @@index([barber_attendance_id])
@@ -52,17 +52,36 @@ enum Attendance_Status {
 }
 
 model AttendanceServices {
-  attendance    Attendance @relation(fields: [attendance_id], references: [id], onDelete: Cascade)
-  attendance_id String
-  service       Services   @relation(fields: [service_id], references: [id], onDelete: Cascade)
-  service_id    String
-  created_at    DateTime
-  updated_at    DateTime
+  attendance         Attendance        @relation(fields: [attendance_id], references: [id], onDelete: Cascade)
+  attendance_id      String
+  barbershop_id      String
+  service_id         String
+  service_barbershop BarbershopService @relation(fields: [barbershop_id, service_id], references: [barbershop_id, service_id], onDelete: Cascade)
+  created_at         DateTime
+  updated_at         DateTime
 
   @@id([attendance_id, service_id])
   @@index([attendance_id])
   @@index([service_id])
   @@map("attendance_services")
+}
+
+model BarbershopService {
+  barbershop         Barbershop           @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
+  barbershop_id      String
+  service            Services             @relation(fields: [service_id], references: [id])
+  service_id         String
+  duration           Int // Exemplo: duração do serviço em minutos
+  price              Float // Preço personalizado para essa barbearia
+  created_at         DateTime
+  updated_at         DateTime
+  Promotions         Promotions[]
+  AttendanceServices AttendanceServices[]
+
+  @@unique([barbershop_id, service_id])
+  @@index([barbershop_id])
+  @@index([service_id])
+  @@map("barbershop_services")
 }
 
 //Daqui para baixo td feito
@@ -81,30 +100,12 @@ model Promotions {
   @@map("promotions")
 }
 
-model BarbershopService {
-  barbershop    Barbershop   @relation(fields: [barbershop_id], references: [id], onDelete: Cascade)
-  barbershop_id String
-  service       Services     @relation(fields: [service_id], references: [id])
-  service_id    String
-  duration      Int // Exemplo: duração do serviço em minutos
-  price         Float // Preço personalizado para essa barbearia
-  created_at    DateTime
-  updated_at    DateTime
-  Promotions    Promotions[]
-
-  @@unique([barbershop_id, service_id])
-  @@index([barbershop_id])
-  @@index([service_id])
-  @@map("barbershop_services")
-}
-
 model Services {
-  id                  String               @id
-  name                String               @db.VarChar()
-  created_at          DateTime
-  updated_at          DateTime
-  attendance_services AttendanceServices[]
-  BarbershopService   BarbershopService[]
+  id                String              @id
+  name              String              @db.VarChar()
+  created_at        DateTime
+  updated_at        DateTime
+  BarbershopService BarbershopService[]
 
   @@map("services")
 }
