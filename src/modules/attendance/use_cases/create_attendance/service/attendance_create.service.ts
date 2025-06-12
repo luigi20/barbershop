@@ -10,6 +10,7 @@ import { Attendance_Service } from '@modules/attendance_service/shared/entities/
 import { IAttendanceServiceRepository } from '@modules/attendance_service/shared/repositories/abstract_class/IAttendanceServiceRepository';
 import { IServiceRepository } from '@modules/services/shared/repositories/abstract_class/IServiceRepository';
 import { IPromotionRepository } from '@modules/promotions/shared/repositories/abstract_class/IPromotionRepository';
+import { Promotion } from '@modules/promotions/shared/entities/promotion.entity';
 
 interface IAttendanceCreateRequest {
   barbershop_id: string;
@@ -62,10 +63,12 @@ export class AttendanceCreateService {
         'Há serviços que não estão cadastrados nessa barbearia',
         404,
       );
-    const list_promotions =
-      await this.promotionRepository.findByListBarbershopIdAndListPromotion(
-        list_promotion_id,
-      );
+    let list_promotions: Promotion[] = [];
+    if (list_promotion_id)
+      list_promotions =
+        await this.promotionRepository.findByListBarbershopIdAndListPromotion(
+          list_promotion_id,
+        );
     const attendance = new Attendance({
       barbershop_id: barbershop_id,
       status: status,
@@ -102,7 +105,6 @@ export class AttendanceCreateService {
       list_attendance_service[i].service_name = list_service_name[i];
       list_attendance_service[i].price = listInfoServices[i].price;
       list_attendance_service[i].duration = listInfoServices[i].duration;
-      // list_attendance_service[i].discount =
     }
     if (list_promotions.length > 0) {
       for (let i = 0; i < list_attendance_service.length; i++) {
