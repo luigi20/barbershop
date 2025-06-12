@@ -3,8 +3,8 @@ import { CreateAttendanceDto } from '../dto/create-attendance.dto';
 import { AttendanceCreateService } from '../service/attendance_create.service';
 import { AttendanceViewModel } from '@modules/attendance/shared/view-models/attendance-view-model';
 
-@Controller('barber')
-export class BarberCreateController {
+@Controller('attendance')
+export class AttendanceCreateController {
   constructor(
     private readonly attendanceCreateService: AttendanceCreateService,
   ) {}

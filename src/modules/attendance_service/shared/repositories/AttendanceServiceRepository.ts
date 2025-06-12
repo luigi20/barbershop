@@ -3,16 +3,21 @@ import { PrismaService } from '@modules/prisma/service/prisma.service';
 import { PrismaAttendanceServiceMapper } from '@modules/prisma/mappers/PrismaAttendanceServiceMapper';
 import { IAttendanceServiceRepository } from './abstract_class/IAttendanceServiceRepository';
 import { Attendance_Service } from '../entities/attendance_service.entity';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 class AttendanceServiceRepository implements IAttendanceServiceRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createMany(data: Attendance_Service[]): Promise<void> {
+  async createMany(
+    data: Attendance_Service[],
+    tx?: Prisma.TransactionClient,
+  ): Promise<void> {
     const raw = data.map((item) =>
       PrismaAttendanceServiceMapper.toPrisma(item),
     );
-    await this.prisma.attendanceServices.createMany({
+    const client = tx ?? this.prisma;
+    await client.attendanceServices.createMany({
       data: raw,
     });
   }

@@ -57,7 +57,6 @@ class MemberRepository implements IMemberRepository {
     });
     return result_list.map((item) => PrismaMemberMapper.toDomain(item));
   }
-
   async create(data: Member): Promise<void> {
     const raw = PrismaMemberMapper.toPrisma(data);
     await this.prisma.member.create({

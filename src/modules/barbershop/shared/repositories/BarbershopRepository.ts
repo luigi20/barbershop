@@ -4,6 +4,7 @@ import { IBarbershopRepository } from './abstract_class/IBarbershopRepository';
 import { Barbershop } from '../entities/barbershop.entity';
 import { PrismaBarbershopMapper } from '@modules/prisma/mappers/PrismaBarbershopMapper';
 import { IdAndNameAndOwnerBarbershop } from '@utils/types';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 class BarbershopRepository implements IBarbershopRepository {

@@ -7,6 +7,7 @@ import { BarbershopModule } from '@modules/barbershop/barbershop.module';
 import { BarberModule } from '@modules/barber/barber.module';
 import { ServiceModule } from '@modules/services/services.module';
 import { BarbershopServiceModule } from '@modules/barbershop_services/barbershop_service.module';
+import { AttendanceModule } from '@modules/attendance/attendance.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BarbershopServiceModule } from '@modules/barbershop_services/barbershop
     BarberModule,
     ServiceModule,
     BarbershopServiceModule,
+    AttendanceModule,
   ],
   controllers: [],
   providers: [],

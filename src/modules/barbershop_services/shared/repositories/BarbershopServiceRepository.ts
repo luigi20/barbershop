@@ -4,6 +4,7 @@ import { IBarbershopServiceRepository } from './abstract_class/IBarbershopServic
 import { PrismaBarbershopServiceMapper } from '@modules/prisma/mappers/PrismaBarbershopServiceMapper';
 import { Barbershop_Service } from '../entities/barbershop_services.entity';
 import { InfoService } from '@utils/types';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 class BarbershopServiceRepository implements IBarbershopServiceRepository {
@@ -43,8 +44,10 @@ class BarbershopServiceRepository implements IBarbershopServiceRepository {
   async findByServiceIdsPrices(
     ids: string[],
     barbershop_id: string,
+    tx?: Prisma.TransactionClient,
   ): Promise<InfoService[]> {
-    const result = await this.prisma.barbershopService.findMany({
+    const client = tx ?? this.prisma;
+    const result = await client.barbershopService.findMany({
       where: {
         service_id: {
           in: ids,
